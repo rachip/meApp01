@@ -1,0 +1,9 @@
+{
+  "firebase": "updatemeapp",
+  "public": "public",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
