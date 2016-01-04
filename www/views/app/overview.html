@@ -1,8 +1,20 @@
-<ion-view title="Update me">
+<ion-view title="Update ME">
   <ion-content>
+    
+    <!-- START Header -->
+    <h2>OVERVIEW</h2>
+    <h4>A short view of your earnings</h4>
+    <!-- END Header -->
+    
+    <!-- START Investment chart section -->
+    <!-- END Investment chart section -->
+    
+    <!-- START Your properties section -->
+    <h2>INVESTMENTS</h2>
+    <h4>List of your properties</h4>
     <div class="categories-list">
       <div ng-repeat="propertyImage_item in propertyImage" class="col">
-        <a class="feed-category" ng-click="toggleLeftSideMenu(propertyImage_item.PropertyId, propertyImage_item.PropertyName, propertyImage_item.FileName)">
+        <a class="feed-category" ui-sref="app.propertyDetails" ng-click="showDetails(propertyImage_item.PropertyId)">
           <pre-img ratio="_1_1" helper-class="square-image">
             <img class="category-image" ng-src="http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{propertyImage_item.FileName}}" spinner-on-load>
           </pre-img>
@@ -11,7 +23,11 @@
         </a>
       </div>
     </div>
+    <!-- END Your properties section -->
     
+    <!-- START Special deals section -->
+    <h2>SPECIAL DEALS</h2>
+    <h4>Similar properties that you invested</h4>
     <div class="categories-list">
       <div ng-repeat="propertyImage_item in specialPropertyImage" class="col">
         <a class="feed-category" ng-click="toggleLeftSideMenu(propertyImage_item.PropertyId, propertyImage_item.PropertyName, propertyImage_item.FileName)">
@@ -23,5 +39,6 @@
         </a>
       </div>
     </div>
+    <!-- END Special deals section -->
   </ion-content>
 </ion-view>

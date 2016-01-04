@@ -1,18 +1,119 @@
-<ion-view class="login-view auth-view" cache-view="false">
-  <ion-content scroll="false"> 
-    <div class="row responsive-sm rowMainScreen">
-      <div class="col">
-	
-        <button class="button button-positive button-block" ng-click="updateMe()">
-			Update Me
-		</button>
-		                        
-		<button class="button button-positive button-block" ng-click="investMe()">
-		  Invest Me
-		</button>
+<ion-view title="Update ME">
+  <ion-content > 
+	<div id="purchase">
+		<h3>Purchase And Sale</h3>
 		
+		<div class="item">        
+	        <div>
+	          <span class="title text_type_bold">Property Name</span>
+	          <p class="description">
+	          	{{purchaseAndSale['PropertyName']}}         
+	          </p>        
+	        </div>        
+        </div>
+     
+      <div class="item">        
+        <div>
+          <span class="title">Buyer Name</span>
+          <p class="description">{{purchaseAndSale['BuyerName']}}</p>
+          <i ng-show="IsBuyerFile" class="icon ion-android-document pointer"
+             ng-click="getFile(purchaseAndSale['PropertyId'], 2)" ui-sref="app.slider" >
+          </i>         
+        </div>
       </div>
-    </div>
+      
+      <div class="item">
+        <div>
+          <span class="title">Is Funds In Escrow</span>
+          <p class="description">
+          	{{purchaseAndSale['IsFundsInEscrow'] == 1 ? "Yes" : "No"}}
+          </p>
+        </div>
+      </div>
+      
+      <div class="item">
+        <div>
+          <span class="title">Escrow Attorney</span>
+          <p class="description">{{purchaseAndSale['EscrowAttorney']}}</p>
+        </div>
+      </div>
+      
+      <div class="item">
+        <div>
+          <span class="title">Closign Date</span>
+          <p class="description">{{purchaseAndSale['ClosignDate']}}</p>
+        </div>
+      </div>
+      
+      <div class="item">
+        <div>
+          <span class="title">Layer Name</span>
+          <p class="description">{{purchaseAndSale['LayerName']}}</p>
+        </div>
+      </div>
+      
+      <div ng-show="IsSignedDocsFile" class="item">
+        <div>
+          <span class="title">Signed Docs</span>
+           <i class="icon ion-android-document pointer"
+              ng-click="getFile(purchaseAndSale['PropertyId'], 3)" ui-sref="app.slider" >
+           </i>         
+        </div>
+      </div>
+    
+      <div class="item">
+        <div>
+          <span class="title">Balance</span>
+          <p class="description">{{purchaseAndSale['Balance']}}</p>
+          <i ng-show="IsBalanceFile" class="icon ion-android-document pointer"
+             ng-click="getFile(purchaseAndSale['PropertyId'], 5)" ui-sref="app.slider" >
+          </i>         
+        </div>
+      </div>
+      
+      <div ng-show="IsFilesTo" class="item">
+        <div>
+          <span class="title">Files To S‌ign</span>
+          <i class="icon ion-android-document pointer" 
+          	 ng-click="getFile(purchaseAndSale['PropertyId'], 4)" ui-sref="app.slider">
+          </i>         
+        </div>
+      </div>
+      
+      <div class="item">
+        <div>
+          <span class="title">Closed</span>
+          <p class="description">{{purchaseAndSale['Closed']}}</p>
+        </div>
+      </div>
+      
+      <div ng-show="showNote" class="item">
+        <div>
+          <span class="title">Note</span>
+          <p class="description">{{purchaseAndSale['Note']}}</p>
+        </div>
+      </div>
+	</div>
+	
+	<div id="closing">
+		<h3>Closing</h3>
+	</div>
+	
+	<div id="renovation">
+		<h3>Renovation</h3>
+	</div>
+	
+	<div id="leasing">
+		<h3>Leasing</h3>
+	</div>
+	
+	<div id="occupied">
+		<h3>Occupied</h3>
+	</div>
+	
+	<div id="eviction">
+		<h3>Eviction</h3>
+	</div>
   </ion-content>
 </ion-view>
 

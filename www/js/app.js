@@ -48,21 +48,30 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     controller: 'AppCtrl'
   })
   
-  //manage property
+  //overview
   .state('app.overview', {
     url: "/overview",
-       views: {
-      'menuContent': {
-        templateUrl: "views/app/overview.html",
-        controller: 'OverviewPropertiesCtrl'
+    views: {
+    	'menuContent': {
+    		templateUrl: "views/app/overview.html",
+    		controller: 'OverviewPropertiesCtrl'
+    	}
     }
-  }
-
   })
-
+  
+  //property details
+  .state('app.propertyDetails', {
+    url: "/propertyDetails",
+    views: {
+    	'menuContent': {
+    		templateUrl: "views/app/propertyDetails.html",
+    		controller: 'PropertyDetailsCtrl'
+    	}
+    }
+  })
   
   // setup an abstract state for the tabs directive
-    .state('invest', {
+  .state('invest', {
     url: '/invest',
     abstract: true,
     templateUrl: 'views/invest/index.html',
@@ -70,7 +79,6 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
   })
 
   // Each tab has its own nav history stack:
-
   .state('invest.chooseProperty', {
 	  url: '/chooseProperty',
     views: {

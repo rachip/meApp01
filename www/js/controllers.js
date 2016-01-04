@@ -155,75 +155,34 @@ angular.module('starter.controllers', ['firebase'])
 	}
 })
 
-
-//propertyDetails ctrl
-.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope, $ionicHistory, $ionicPlatform) {
-	console.log("PropertyDetailsCtrl");
-	var marketingPropertyId;
-	
-	$scope.$on( "propertyId", function(event, data) {		
-		marketingPropertyId = data.marketingPropertyId;
-		console.log("ccc " + marketingPropertyId);
-		
-		$http({
-			url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getMarketingId', 
-			method: "GET",
-			params:  {index:marketingPropertyId}, 
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-		}).then(function(resp) {
-			$scope.details = [];
-
-			$scope.details = resp.data;
-			console.log($scope.details);
-
-		}, function(err) {
-		    console.error('ERR', err);
-		});	
-	
-	});
-})
-
 //OverviewProperties Ctrl - logged in user
-.controller('OverviewPropertiesCtrl', function($scope, $http) {
-	
-	console.log('OverviewPropertiesCtrl');
+.controller('OverviewPropertiesCtrl', function($scope, $http, $timeout, $rootScope) {
 	
 	// get properties for 'your properties' section
-	var url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAdminPropertyImage';
-    var id = localStorage.getItem('id');;
+	var url;
+    var id;
     if(loginUserType == "client") {    	
     	url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage';
     	id = localStorage.getItem('id');
-    }
-    else {
-    	if(localStorage.getItem('isAdmin') == 1) {    		
-    		url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAdminPropertyImage';
-    		id = 0;
-    	}
-    	else {
-    		url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getUserPropertyImage';
-    		id = localStorage.getItem('branch');
-    	}
-    }
-    
-	$http({
-	    url: url, 
-	    method: "GET",
-	    params:  {index:id}, 
-	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-	}).then(function(resp) {
+    	$http({
+    	    url: url, 
+    	    method: "GET",
+    	    params:  {index:id}, 
+    	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    	}).then(function(resp) {
 
-		$scope.propertyImage = [];
+    		$scope.propertyImage = [];
 
-		$scope.propertyImage = resp.data;
-	
-	}, function(err) {
-	    console.error('ERR', err);
-	})
+    		$scope.propertyImage = resp.data;
+    	
+    	}, function(err) {
+    	    console.error('ERR', err);
+    	})
+    }
 	
 	// get properties for 'special deals section'
-	 if(loginUserType == "client") {    	
-    	url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getSpecialDealsPropertyImage';
+	if(loginUserType == "client") {    	
+		url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getSpecialDealsPropertyImage';
     	id = localStorage.getItem('id');
     	$http({
     	    url: url, 
@@ -239,33 +198,94 @@ angular.module('starter.controllers', ['firebase'])
     	}, function(err) {
     	    console.error('ERR', err);
     	})
-	 }
+	}
+	
+	$scope.showDetails = function(propertyId) {
+		console.log("showDetails function " + propertyId);
+	    $timeout(function() {
+	    	var unbind = $rootScope.$broadcast( "showDetails", {PropertyId:propertyId} );
+	    });
+	}
+})
 
+//propertyDetails ctrl
+.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope) {
+	console.log("PropertyDetailsCtrl");
+	
+	var propertyId;
+	$scope.$on( "showDetails", function(event, data) {	  
+		propertyId = data.PropertyId;
+		getPurchaseDetails(propertyId, $scope, $http);
+		getClosingDetails(propertyId);
+		getRenovationDetails(propertyId);
+		getLeasingDetails(propertyId);
+		getOccupiedDetails(propertyId);
+		getEvictionDetails(propertyId);		
+	});	
 })
 
 .controller('DashCtrl', function($scope) {})
-
-/*.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})*/
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
 })
+
+function getPurchaseDetails(propertyId, $scope, $http) {
+	console.log("getPurchaseDetails");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PurchaseAndSale', 
+	    method: "GET",
+	    params:  {index: propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			//$scope.isHasData = true;
+			//$scope.isMsg = false;
+	
+			$scope.purchaseAndSale = resp.data[0];
+			
+			console.log( resp.data[0]);
+			$scope.isHasFile = $scope.purchaseAndSale['IsHasFile'] == 1 ? true : false;
+			$scope.IsBuyerFile = $scope.purchaseAndSale['IsBuyerFile'] == 1 ? true : false;
+			$scope.IsSignedDocsFile = $scope.purchaseAndSale['IsSignedDocsFile'] == 1 ? true : false;
+			$scope.IsBalanceFile = $scope.purchaseAndSale['IsBalanceFile'] == 1 ? true : false;
+			$scope.IsFilesTo = $scope.purchaseAndSale['IsFilesToS‌ignFile'] == 1 ? true : false;
+			$scope.showNote = $scope.purchaseAndSale['ShowNote'] == 1 ? true : false;
+							
+		} else {
+			$scope.msg = "Your property is not on Purchase And Sale status";		
+			$scope.isMsg = true;
+			$scope.isHasData = false;
+		}
+		
+	}, function(err) {
+	    console.error('ERR', err);
+	})
+}
+
+
+function getClosingDetails(propertyId) {
+	console.log("getClosingDetails");
+}
+
+
+function getRenovationDetails(propertyId) {
+	console.log("getRenovationDetails");
+}
+
+
+function getLeasingDetails(propertyId) {
+	console.log("getLeasingDetails");
+}
+
+
+function getOccupiedDetails(propertyId) {
+	console.log("getOccupiedDetails");
+}
+
+
+function getEvictionDetails(propertyId) {
+	console.log("getEvictionDetails");
+}
