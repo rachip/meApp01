@@ -8,10 +8,6 @@
 
 angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services', 'ionic.service.analytics', 'firebase', 'ionicLazyLoad', 'starter.controllers'])
 
-
-
-
-
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     var push = new Ionic.Push({
@@ -53,11 +49,11 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
   })
   
   //manage property
-  .state('app.manageProperty', {
-    url: "/manageProperty",
+  .state('app.overview', {
+    url: "/overview",
   
-        templateUrl: "views/app/manageProperty.html",
-        controller: 'ManagePropertyCtrl'
+        templateUrl: "views/app/overview.html",
+        controller: 'OverviewPropertiesCtrl'
    
   })
 
