@@ -216,11 +216,11 @@ angular.module('starter.controllers', ['firebase'])
 	$scope.$on( "showDetails", function(event, data) {	  
 		propertyId = data.PropertyId;
 		getPurchaseDetails(propertyId, $scope, $http);
-		getClosingDetails(propertyId);
-		getRenovationDetails(propertyId);
-		getLeasingDetails(propertyId);
-		getOccupiedDetails(propertyId);
-		getEvictionDetails(propertyId);		
+		getClosingDetails(propertyId, $scope, $http);
+		getRenovationDetails(propertyId, $scope, $http);
+		getLeasingDetails(propertyId, $scope, $http);
+		getOccupiedDetails(propertyId, $scope, $http);
+		getEvictionDetails(propertyId, $scope, $http);		
 	});	
 })
 
@@ -241,51 +241,130 @@ function getPurchaseDetails(propertyId, $scope, $http) {
 	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).then(function(resp) {
 		if (resp.data.length != 0) {
-			//$scope.isHasData = true;
-			//$scope.isMsg = false;
-	
+			
 			$scope.purchaseAndSale = resp.data[0];
 			
-			console.log( resp.data[0]);
-			$scope.isHasFile = $scope.purchaseAndSale['IsHasFile'] == 1 ? true : false;
+			$scope.isHasPurchaseFile = $scope.purchaseAndSale['IsHasFile'] == 1 ? true : false;
 			$scope.IsBuyerFile = $scope.purchaseAndSale['IsBuyerFile'] == 1 ? true : false;
 			$scope.IsSignedDocsFile = $scope.purchaseAndSale['IsSignedDocsFile'] == 1 ? true : false;
 			$scope.IsBalanceFile = $scope.purchaseAndSale['IsBalanceFile'] == 1 ? true : false;
 			$scope.IsFilesTo = $scope.purchaseAndSale['IsFilesToS‌ignFile'] == 1 ? true : false;
-			$scope.showNote = $scope.purchaseAndSale['ShowNote'] == 1 ? true : false;
+			$scope.showPurchaseNote = $scope.purchaseAndSale['ShowNote'] == 1 ? true : false;
 							
-		} else {
-			$scope.msg = "Your property is not on Purchase And Sale status";		
-			$scope.isMsg = true;
-			$scope.isHasData = false;
-		}
+		} 		
+	}, function(err) {
+	    console.error('ERR', err);
+	})
+}
+
+function getClosingDetails(propertyId, $scope, $http) {
+	console.log("getClosingDetails");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Closing', 
+	    method: "GET",
+	    params:  {index:propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			
+			$scope.closing = resp.data[0];
+
+			$scope.IsClosingHasFile = $scope.closing['IsHasFile'] == 1 ? true : false;
+			$scope.IsWalkThroghFile = $scope.closing['IsWalkThroghFile'] == 1 ? true : false;
+			$scope.IsInsuranceFile = $scope.closing['IsInsuranceFile'] == 1 ? true : false;
+			$scope.IsClosingDocsFile = $scope.closing['IsClosingDocsFile'] == 1 ? true : false;
+			$scope.showClosingNote = $scope.closing['ShowNote'] == 1 ? true : false;
+		} 
+	}, function(err) {
+	    console.error('ERR', err);
+	})
+}
+
+function getRenovationDetails(propertyId, $scope, $http) {
+	console.log("getRenovationDetails");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Renovation', 
+	    method: "GET",
+	    params:  {index:propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			
+			$scope.renovation = resp.data[0];
 		
+			$scope.IsHasRenovationFile = $scope.renovation['IsHasFile'] == 1 ? true : false;
+			$scope.IsFundsSentFile = $scope.renovation['IsFundsSentFile'] == 1 ? true : false;
+			$scope.IsWorkEstimateFile = $scope.renovation['IsWorkEstimateFile'] == 1 ? true : false;
+			$scope.IsPayment1File = $scope.renovation['IsPayment1File'] == 1 ? true : false;
+			$scope.IsPayment2File = $scope.renovation['IsPayment2File'] == 1 ? true : false;
+			$scope.IsPayment3File = $scope.renovation['IsPayment3File'] == 1 ? true : false;
+			$scope.IsCOFOFile = $scope.renovation['IsCOFOFile'] == 1 ? true : false;
+			$scope.showRenovationNote = $scope.renovation['ShowNote'] == 1 ? true : false;
+		} 
 	}, function(err) {
 	    console.error('ERR', err);
 	})
 }
 
 
-function getClosingDetails(propertyId) {
-	console.log("getClosingDetails");
-}
-
-
-function getRenovationDetails(propertyId) {
-	console.log("getRenovationDetails");
-}
-
-
-function getLeasingDetails(propertyId) {
+function getLeasingDetails(propertyId, $scope, $http) {
 	console.log("getLeasingDetails");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Leasing', 
+	    method: "GET",
+	    params:  {index:propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+		
+			$scope.leasing = resp.data[0];
+		
+			$scope.IsHasLeasingFile = $scope.leasing['IsHasFile'] == 1 ? true : false;
+			$scope.IsApplicationFile = $scope.leasing['IsApplicationFile'] == 1 ? true : false;
+			$scope.IsLeaseFile = $scope.leasing['IsLeaseFile'] == 1 ? true : false;
+			$scope.showLeasingNote = $scope.leasing['ShowNote'] == 1 ? true : false;
+		}		
+	}, function(err) {
+	    console.error('ERR', err);
+	})	
 }
 
-
-function getOccupiedDetails(propertyId) {
+function getOccupiedDetails(propertyId, $scope, $http) {
 	console.log("getOccupiedDetails");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Occupied', 
+	    method: "GET",
+	    params:  {index:propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+		
+			$scope.occupied = resp.data[0];
+		
+			$scope.IsHasOccupiedFile = $scope.occupied['IsHasFile'] == 1 ? true : false;
+			$scope.IsMaintanenceFile = $scope.occupied['IsMaintanenceFile'] == 1 ? true : false;
+			$scope.showOccupiedNote = $scope.occupied['ShowNote'] == 1 ? true : false;
+		}
+	}, function(err) {
+	    console.error('ERR', err);
+	})
 }
 
-
-function getEvictionDetails(propertyId) {
+function getEvictionDetails(propertyId, $scope, $http) {
 	console.log("getEvictionDetails");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Eviction', 
+	    method: "GET",
+	    params:  {index:propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			$scope.eviction = resp.data[0];
+
+			$scope.IsHasEvictionFile = $scope.eviction['IsHasFile'] == 1 ? true : false;
+			$scope.showEvictionNote = $scope.eviction['ShowNote'] == 1 ? true : false;
+		} 
+	}, function(err) {
+	    console.error('ERR', err);
+	})
 }
