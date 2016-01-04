@@ -11,6 +11,8 @@ angular.module('starter.controllers', ['firebase'])
 //LOGIN
 .controller('LoginCtrl', function($scope, $http, $state, $location) {
 
+
+
 	$scope.loginClick= 0;
 	$scope.errorLogin=0;
 
@@ -44,24 +46,60 @@ angular.module('starter.controllers', ['firebase'])
 			if(resp.data == "false") {
 				$scope.msg = "The Email or Password incorrect";
 				$scope.errorLogin=1;
+				Ionic.io();
+
+					// this will give you a fresh user or the previously saved 'current user'
+					var user = Ionic.User.current();
+					  user.id = Ionic.User.anonymousId();
+
+					//persist the user
+					user.save();
+
 			}
 			else {
+
+					// kick off the platform web client
+					Ionic.io();
+
+					// this will give you a fresh user or the previously saved 'current user'
+					var user = Ionic.User.current();
+
+					// if the user doesn't have an id, you'll need to give it one.
+					if (!user.id) {
+					  user.id = Ionic.User.anonymousId();
+					  // user.id = 'your-custom-user-id';
+					}
+
+					user.set('name', resp.data["ClientName"]);
+					user.set('userid', resp.data["UserId"]);
+
+					//persist the user
+					user.save();
+
+				
 				
 				localStorage.setItem("loginUserType", resp.data["Type"]);
 				if(resp.data["Type"] == "user") {
 					loginUserType = "user";
 					localStorage.setItem("id", resp.data["UserId"]);
+					localStorage.setItem("ClientName", resp.data["ClientName"]);
 					localStorage.setItem("isAdmin", resp.data["IsAdmin"]);
 					localStorage.setItem("branch", resp.data["BranchId"]);
 					localStorage.setItem("email", $scope.userDetail.email);
-					localStorage.setItem("password", $scope.userDetail.password);	
+					localStorage.setItem("password", $scope.userDetail.password);
+
+
 				}
 				else {
+					user.set('name', resp.data["ClientName"]);
 					loginUserType = "client";
 					localStorage.setItem("id", resp.data["ClientId"]);
+					localStorage.setItem("ClientName", resp.data["ClientName"]);
 					localStorage.setItem("email", $scope.userDetail.email);
 					localStorage.setItem("password", $scope.userDetail.password);
-				}				
+				}
+
+					console.log(resp.data);				
 				 $state.go('invest.chooseProperty');
 			}
 		
@@ -101,24 +139,26 @@ angular.module('starter.controllers', ['firebase'])
 	};
 })
 
-.controller('ChatsCtrl', function($scope, $firebaseObject, $firebaseArray, $rootScope ) {
+.controller('ChatsCtrl', function($scope, $firebaseObject,$firebaseArray, $rootScope ) {
 
-	var ref = new Firebase("https://updatemeapp.firebaseio.com/");
+	var userId = localStorage.getItem("id");
+
+	var ref = new Firebase("https://updatemeapp.firebaseio.com/messages/" + userId);
+
+
+
+		ref.on("child_added", function(messageSnapshot) {
+			 
+			var messageData = messageSnapshot.val();
+
+			console.log(messageData);
+
+
+		});
 
 	$scope.chats = $firebaseArray(ref);
 
-	if (localStorage.getItem("email") != null) {
-
-		var username = localStorage.getItem("email");
-
-	}
-
-	else {
-
-		var username = 'user';
-	}
-
-
+	var username = localStorage.getItem("ClientName");
 
 
 
@@ -126,7 +166,9 @@ angular.module('starter.controllers', ['firebase'])
 
 		$scope.chats.$add({
 		user: username,
-        message: chat.message
+		userid: userId,
+        message: chat.message,
+        timestamp: new Date().getTime()
         });
 
 		chat.message = "";

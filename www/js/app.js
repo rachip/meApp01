@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('starter', ['ionic', 'firebase', 'ionicLazyLoad', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services', 'ionic.service.analytics', 'firebase', 'ionicLazyLoad', 'starter.controllers'])
 
 
 
@@ -14,17 +14,13 @@ angular.module('starter', ['ionic', 'firebase', 'ionicLazyLoad', 'starter.contro
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+    var push = new Ionic.Push({
+      "debug": true
+    });
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
+    push.register(function(token) {
+      console.log("Device token:",token.token);
+    });
   });
 })
 
