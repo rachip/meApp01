@@ -51,10 +51,13 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
   //manage property
   .state('app.overview', {
     url: "/overview",
-  
+       views: {
+      'menuContent': {
         templateUrl: "views/app/overview.html",
         controller: 'OverviewPropertiesCtrl'
-   
+    }
+  }
+
   })
 
   
