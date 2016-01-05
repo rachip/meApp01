@@ -215,6 +215,7 @@ angular.module('starter.controllers', ['firebase'])
 	var propertyId;
 	$scope.$on( "showDetails", function(event, data) {	  
 		propertyId = data.PropertyId;
+		getPropertyImage(propertyId, $scope, $http)
 		getPurchaseDetails(propertyId, $scope, $http);
 		getClosingDetails(propertyId, $scope, $http);
 		getRenovationDetails(propertyId, $scope, $http);
@@ -232,8 +233,44 @@ angular.module('starter.controllers', ['firebase'])
   };
 })
 
+function getPropertyImage(propertyId, $scope, $http) {
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getSpesificPropertyImage', 
+	    method: "GET",
+	    params:  {PropertyId: propertyId, ClientId: localStorage.getItem('id')}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			
+			$scope.image = resp.data[0];
+			
+			console.log($scope.image);
+		} 		
+	}, function(err) {
+	    console.error('ERR', err);
+	})
+	
+	$scope.getAllImages = function() {
+		console.log("getAllImages");
+		$http({
+		    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAllPropertyImages', 
+		    method: "GET",
+		    params:  {PropertyId: propertyId, ClientId: localStorage.getItem('id')}, 
+		    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+		}).then(function(resp) {
+			if (resp.data.length != 0) {
+				
+				$scope.allImages = resp.data;
+				
+				console.log($scope.allImages);
+			} 		
+		}, function(err) {
+		    console.error('ERR', err);
+		})
+	}
+}
+
 function getPurchaseDetails(propertyId, $scope, $http) {
-	console.log("getPurchaseDetails");
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PurchaseAndSale', 
 	    method: "GET",
@@ -258,7 +295,6 @@ function getPurchaseDetails(propertyId, $scope, $http) {
 }
 
 function getClosingDetails(propertyId, $scope, $http) {
-	console.log("getClosingDetails");
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Closing', 
 	    method: "GET",
@@ -281,7 +317,6 @@ function getClosingDetails(propertyId, $scope, $http) {
 }
 
 function getRenovationDetails(propertyId, $scope, $http) {
-	console.log("getRenovationDetails");
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Renovation', 
 	    method: "GET",
@@ -306,9 +341,7 @@ function getRenovationDetails(propertyId, $scope, $http) {
 	})
 }
 
-
 function getLeasingDetails(propertyId, $scope, $http) {
-	console.log("getLeasingDetails");
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Leasing', 
 	    method: "GET",
@@ -330,7 +363,6 @@ function getLeasingDetails(propertyId, $scope, $http) {
 }
 
 function getOccupiedDetails(propertyId, $scope, $http) {
-	console.log("getOccupiedDetails");
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Occupied', 
 	    method: "GET",
@@ -351,7 +383,6 @@ function getOccupiedDetails(propertyId, $scope, $http) {
 }
 
 function getEvictionDetails(propertyId, $scope, $http) {
-	console.log("getEvictionDetails");
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Eviction', 
 	    method: "GET",
