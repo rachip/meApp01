@@ -11,12 +11,43 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     var push = new Ionic.Push({
-      "debug": true
+      "onNotification": function (nutification) {
+
+        alert("soooo");
+        
+      },
+      "ploginConfig": {
+        "android": {
+          "iconColor" : "#ccc"
+
+
+        }
+
+
+      }
+ 
     });
 
-    push.register(function(token) {
-      console.log("Device token:",token.token);
-    });
+    var user = new Ionic.User.current();
+
+    if (!user.id) {
+          user.id = Ionic.User.anonymousId();
+          // user.id = 'your-custom-user-id';
+        }
+
+        user.save();
+
+        var callBack = function (argument) {
+
+          push.addTokenToUser(user);
+          user.save();
+          
+        }
+
+        push.register(callBack);
+
+
+
   });
 })
 
