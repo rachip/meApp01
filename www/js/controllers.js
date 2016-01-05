@@ -92,7 +92,7 @@ angular.module('starter.controllers', ['firebase'])
 				}
 
 				console.log(resp.data);					
-				$state.go('app.overview');
+				$state.go('overview');
 			}
 		
 		}, function(err) {
@@ -157,6 +157,28 @@ angular.module('starter.controllers', ['firebase'])
 
 //OverviewProperties Ctrl - logged in user
 .controller('OverviewPropertiesCtrl', function($scope, $http, $timeout, $rootScope) {
+
+	 $scope.progress = 0.75;
+  
+  // Color hex values
+  var orange = "#e67e22";
+  var red = "#e74c3c";
+  var green = "#2ecc71";
+  
+  // Breakpoints for colors
+  var breakToWarning = 0.60;
+  var breakToDanger = 0.90;
+  
+  // Color change
+  $scope.$watch('progress', function(){
+    if ($scope.progress >= breakToDanger) {
+      $scope.barColor = red;
+    } else if ($scope.progress < breakToDanger && $scope.progress > breakToWarning) {
+      $scope.barColor = orange;
+    } else if ($scope.progress < breakToWarning) {
+      $scope.barColor = green;
+    }
+  });
 	
 	// get properties for 'your properties' section
 	var url;
@@ -180,21 +202,21 @@ angular.module('starter.controllers', ['firebase'])
     			for(var i = 0; i < resp.data.length; i+=2) {
     				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
     				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-    				$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
     				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
     				rndval = 100 - rndval;
-    				$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
     			}
     		} else {
     			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
-				$('#INVESTMENTSimg').append('<div class="col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
 				for(var i = 1; i < resp.data.length; i+=2) {
 					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
 					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-					$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+					$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
 					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
 					rndval = 100 - rndval;
-					$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+					$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
     			}
     		}
     	
@@ -222,21 +244,21 @@ angular.module('starter.controllers', ['firebase'])
     			for(var i = 0; i < resp.data.length; i+=2) {
     				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
     				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-    				$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
     				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
     				rndval = 100 - rndval;
-    				$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
     			}
     		} else {
     			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
-				$('#SPECIAL_DEALSimg').append('<div class="col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
 				for(var i = 1; i < resp.data.length; i+=2) {
 					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
 					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-					$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+					$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
 					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
 					rndval = 100 - rndval;
-					$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+					$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
     			}
     		}
     	
