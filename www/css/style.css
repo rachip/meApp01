@@ -3,22 +3,17 @@
     src: url('MuseoSans_500-webfont.woff');
 }
 
-body {
-
+body, h2, h4 {
     font-family: 'MuseoSans';
-
-
 }
 
 .rowMainScreen {
-
     background-image: url('img/coverLogin.jpg');
     background-size: cover;
 
 }
 
 .invMainScr {
-
     background-image: url('img/in.jpg');
     background-size: cover;
     background-position: center;
@@ -31,15 +26,11 @@ body {
 }
 
 .updMainScr {
-
     height: 350px;
     width: 100%;
-   
-
 }
 
 .updateMeMainScText, .enterMainScText {
-
     width: 100%;
     display: block;
     top: 20%;
@@ -47,7 +38,6 @@ body {
 }
 
 .updateMeMainScText img {
-
     width: 250px;
     margin: 0px auto;
     display: block;
@@ -55,7 +45,6 @@ body {
 }
 
 .enterMainScText img {
-
     width: 100px;
     margin: 0px auto;
     display: block;
@@ -64,7 +53,6 @@ body {
 }
 
 .loginForm {
-
     width: 100%;
     top: 43%;
     position: absolute;
@@ -80,7 +68,6 @@ input::-webkit-input-placeholder {
     padding: 21px;
     text-align: center;
     background-color: rgba(251, 241, 241, 0.3);
-
 }
 
 .loginForm button {
@@ -114,39 +101,17 @@ input::-webkit-input-placeholder {
 }
 
 .bar-header {
-
-border-bottom-width: 0;
-
-
+    border-bottom-width: 0;
 }
 
-.col-50-p {
-
-	width: 50%;
-	float: left;
-	padding: 2px;
-
+.pre_img {
+    height: 150px;
+    background: #ccc;
+    overflow: hidden;
+    width: 100%;
 }
 
-
-.col-50-p img {
-
-	width: 128%;
-	height: auto;
-
-}
-
-.pre_img{
- 
- height: 150px;
- background: #ccc;
- overflow: hidden;
- width: 100%;
-
-
-}
-
-.markt-title{
+.markt-title {
 
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
 background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
@@ -157,10 +122,7 @@ position: absolute;
 color: white;
 padding: 5px;
 width: 49.1%;
-
-
 }
-
 
 .no-padding {
     padding: 0px !important;
@@ -185,5 +147,45 @@ width: 49.1%;
     overflow: hidden;
 }
 
+#INVESTMENTSimg {
+    width: 100%;
 
+}
+
+.col {
+    border: white 2px solid;
+}
+
+.col-40 {
+    width: 40%;
+    float: left;
+    height: 170px;
+    background-size: cover;
+} 
+
+.col-60 {
+    width: 60%;
+    float: left;
+    height: 170px;
+    background-size: cover;
+}
+
+.col-100 {
+    width: 100%;
+    float: none;
+    height: 170px;
+    background-size: cover;
+}
+
+.col-50 {
+    width: 50%;
+    float: left;
+    height: 170px;
+    background-size: cover;
+}
+
+.overviewTitle {
+    text-align: center;
+    font-family: 'MuseoSans';
+}
 

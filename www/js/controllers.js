@@ -1,3 +1,4 @@
+var widthArr = [60, 40, 50];
 var loginUserType;
 angular.module('starter.controllers', ['firebase'])
 
@@ -23,7 +24,6 @@ angular.module('starter.controllers', ['firebase'])
     $scope.investMe = function() {
 	    $state.go('invest.chooseProperty');
     };
-
 
     $scope.userDetail = {};
 	
@@ -161,6 +161,7 @@ angular.module('starter.controllers', ['firebase'])
 	// get properties for 'your properties' section
 	var url;
     var id;
+    var rndval;
     if(loginUserType == "client") {    	
     	url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage';
     	id = localStorage.getItem('id');
@@ -174,6 +175,28 @@ angular.module('starter.controllers', ['firebase'])
     		$scope.propertyImage = [];
 
     		$scope.propertyImage = resp.data;
+			
+    		if(resp.data.length % 2 == 0) {
+    			for(var i = 0; i < resp.data.length; i+=2) {
+    				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
+    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
+    				$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
+    				rndval = 100 - rndval;
+    				$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    			}
+    		} else {
+    			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
+				$('#INVESTMENTSimg').append('<div class="col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+				for(var i = 1; i < resp.data.length; i+=2) {
+					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
+					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
+					$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
+					rndval = 100 - rndval;
+					$('#INVESTMENTSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    			}
+    		}
     	
     	}, function(err) {
     	    console.error('ERR', err);
@@ -194,6 +217,28 @@ angular.module('starter.controllers', ['firebase'])
     		$scope.specialPropertyImage = [];
 
     		$scope.specialPropertyImage = resp.data;
+
+    		if(resp.data.length % 2 == 0) {
+    			for(var i = 0; i < resp.data.length; i+=2) {
+    				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
+    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
+    				$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
+    				rndval = 100 - rndval;
+    				$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    			}
+    		} else {
+    			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
+				$('#SPECIAL_DEALSimg').append('<div class="col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+				for(var i = 1; i < resp.data.length; i+=2) {
+					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
+					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
+					$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
+					rndval = 100 - rndval;
+					$('#SPECIAL_DEALSimg').append('<div class="col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+    			}
+    		}
     	
     	}, function(err) {
     	    console.error('ERR', err);

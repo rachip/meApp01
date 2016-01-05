@@ -10,7 +10,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-    var push = new Ionic.Push({
+    /*var push = new Ionic.Push({
       "onNotification": function (nutification) {
 
         alert("soooo");
@@ -44,7 +44,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
           
         }
 
-        push.register(callBack);
+        push.register(callBack);*/
 
 
 
