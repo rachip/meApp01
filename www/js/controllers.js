@@ -157,28 +157,31 @@ angular.module('starter.controllers', ['firebase'])
 
 //OverviewProperties Ctrl - logged in user
 .controller('OverviewPropertiesCtrl', function($scope, $http, $timeout, $rootScope) {
+	
+	// bar
+	var div1 = d3.select(document.getElementById('div1'));
+	start();
 
-	 $scope.progress = 0.75;
-  
-  // Color hex values
-  var orange = "#e67e22";
-  var red = "#e74c3c";
-  var green = "#2ecc71";
-  
-  // Breakpoints for colors
-  var breakToWarning = 0.60;
-  var breakToDanger = 0.90;
-  
-  // Color change
-  $scope.$watch('progress', function(){
-    if ($scope.progress >= breakToDanger) {
-      $scope.barColor = red;
-    } else if ($scope.progress < breakToDanger && $scope.progress > breakToWarning) {
-      $scope.barColor = orange;
-    } else if ($scope.progress < breakToWarning) {
-      $scope.barColor = green;
-    }
-  });
+	function onClick1() {
+	    deselect();
+	}
+
+	function labelFunction(val,min,max) {
+
+	}
+
+	function deselect() {
+	    div1.attr("class","radial");
+	}
+
+	function start() {
+	    var rp1 = radialProgress(document.getElementById('div1'))
+	            .label("ROI")
+	            .onClick(onClick1)
+	            .diameter(100)
+	            .value(78)
+	            .render();
+	}	
 	
 	// get properties for 'your properties' section
 	var url;
