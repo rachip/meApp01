@@ -157,37 +157,57 @@ angular.module('starter.controllers', ['firebase'])
 
 //OverviewProperties Ctrl - logged in user
 .controller('OverviewPropertiesCtrl', function($scope, $http, $timeout, $rootScope) {
-	
-	// bar
-	var div1 = d3.select(document.getElementById('div1'));
-	start();
-
-	function onClick1() {
-	    deselect();
-	}
-
-	function labelFunction(val,min,max) {
-
-	}
-
-	function deselect() {
-	    div1.attr("class","radial");
-	}
-
-	function start() {
-	    var rp1 = radialProgress(document.getElementById('div1'))
-	            .label("ROI")
-	            .onClick(onClick1)
-	            .diameter(100)
-	            .value(78)
-	            .render();
-	}	
-	
-	// get properties for 'your properties' section
 	var url;
     var id;
     var rndval;
-    if(loginUserType == "client") {    	
+    
+    // get main bar values
+    url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertiesROIChartAPI';
+	id = localStorage.getItem('id');
+	$http({
+	    url: url, 
+	    method: "GET",
+	    params:  {index:id}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.propertyBar = [];
+
+		$scope.propertyBar = resp.data;
+		
+		var val = resp.data[0]['TotalReturn'] / resp.data[0]['InvestmentAmount'] * 100;
+		
+		// bar
+		var div1 = d3.select(document.getElementById('div1'));
+		start();
+
+		function onClick1() {
+		    deselect();
+		}
+
+		function labelFunction(val,min,max) {
+
+		}
+
+		function deselect() {
+		    div1.attr("class","radial");
+		}
+
+		function start() {
+		    var rp1 = radialProgress(document.getElementById('div1'))
+		            .label("ROI")
+		            .onClick(onClick1)
+		            .diameter(val)
+		            .value(val)
+		            .render();
+		}
+	
+	}, function(err) {
+	    console.error('ERR', err);
+	})
+    
+	// get properties for 'your properties' section
+	if(loginUserType == "client") {    	
     	url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage';
     	id = localStorage.getItem('id');
     	$http({
