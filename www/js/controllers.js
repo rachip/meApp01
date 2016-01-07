@@ -110,16 +110,17 @@ angular.module('starter.controllers', ['firebase'])
 	var $x;
 	
 	$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing', 
-	    method: "GET", 
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getTop4Properties', 
+	    method: "GET",
+	    params:  {index:1}, 
 	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).then(function(resp) {
 
 		$scope.properties = [];
 
 		$scope.properties = resp.data;
-		
-		if(resp.data.length % 2 != 0) {
+		console.log(resp.data.length);
+		/*if(resp.data.length % 2 != 0) {
 			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
 			$('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i].PropertyId + ")" + '" class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
 			i = 1;
@@ -137,7 +138,7 @@ angular.module('starter.controllers', ['firebase'])
 			rndval = 100 - rndval;
 			$x = $('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i+1].PropertyId + ")" + '" class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
 			$compile($x)($scope);
-		} 
+		} */
 	
 	}, function(err) {
 	    console.error('ERR', err);
@@ -216,14 +217,15 @@ angular.module('starter.controllers', ['firebase'])
 		}
 
 		function deselect() {
-		    div1.attr("class","radial");
+		    //div1.attr("class","radial");
 		}
 
 		function start() {
+			$('.label').val("sghdsfhsdf");
 		    var rp1 = radialProgress(document.getElementById('div1'))
-		            .label("ROI")
+		            //.label("ROI")
 		            .onClick(onClick1)
-		            .diameter(val)
+		            .diameter(120)
 		            .value(val)
 		            .render();
 		}
