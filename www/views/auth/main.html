@@ -1,9 +1,7 @@
 <ion-view class="rowMainScreen" hide-nav-bar="true" cache-view="false">
   <ion-content scroll="false"> 
     <div class="">
- 
-	
-        <div class="updMainScr" ng-click="updateMe()">
+        <div class="updMainScr">
 			<span class="updateMeMainScText">
 				<img src="css/img/updateme.png">
 			</span>
@@ -21,16 +19,13 @@
 
 		   </form>
 
-			<span class="enterMainScText" ng-hide="loginClick===1">
-				<img src="css/img/enter.png">
+			<span class="enterMainScText" ng-hide="loginClick===1" >
+				<img src="css/img/enter.png" class="pointer" ng-click="updateMe()">
 			</span>
 		</div>
 		                        
 		<div class="invMainScr" ng-class="{'animated fadeOutDown': loginClick===1}"  ng-click="investMe()">
-		  
 		</div>
-		
-
     </div>
   </ion-content>
 </ion-view>

@@ -17,7 +17,7 @@ angular.module('starter.controllers', ['firebase'])
 	$scope.errorLogin=0;
 
 	$scope.updateMe = function() { 
-		$scope.loginClick= 1;
+		$scope.loginClick = 1;
 		//$location.path( "/app/manageProperty" );
     };
     

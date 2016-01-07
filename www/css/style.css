@@ -15,16 +15,18 @@ body, h2, h4 {
 
 }
 
+.pointer {
+	cursor: pointer;
+}
+
 .invMainScr {
     background-image: url('img/in.jpg');
     background-size: cover;
     background-position: center;
     height: 350px;
-    cursor: pointer;
     position: fixed;
     bottom: 0;
     width: 100%;
-
 }
 
 .updMainScr {
@@ -43,7 +45,6 @@ body, h2, h4 {
     width: 250px;
     margin: 0px auto;
     display: block;
-
 }
 
 .enterMainScText img {
@@ -51,7 +52,6 @@ body, h2, h4 {
     margin: 0px auto;
     display: block;
     margin-top: 60px;
-
 }
 
 .loginForm {
