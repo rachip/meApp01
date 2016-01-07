@@ -160,6 +160,8 @@ angular.module('starter.controllers', ['firebase'])
 	var url;
     var id;
     var rndval;
+    var rndvalKodem = 0;
+    var propertyCnt = 0;
     
     // get main bar values
     url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertiesROIChartAPI';
@@ -220,29 +222,26 @@ angular.module('starter.controllers', ['firebase'])
     		$scope.propertyImage = [];
 
     		$scope.propertyImage = resp.data;
-			
-    		if(resp.data.length % 2 == 0) {
-    			for(var i = 0; i < resp.data.length; i+=2) {
-    				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
-    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-    				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
-    				rndval = 100 - rndval;
-    				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-    			}
-    		} else {
+    		propertyCnt = resp.data.length;
+    		
+    		var i = 0;
+    		if(resp.data.length % 2 != 0) {
     			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
 				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-				for(var i = 1; i < resp.data.length; i+=2) {
+				i = 1;
+    		} 
+    		
+			for(; i < resp.data.length; i+=2) {
+				do {
 					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
-					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-					$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
-					rndval = 100 - rndval;
-					$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-    			}
-    		}
-    	
+				} while (rndval == rndvalKodem);
+				rndvalKodem = rndval;
+				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
+				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
+				rndval = 100 - rndval;
+				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+			} 
     	}, function(err) {
     	    console.error('ERR', err);
     	})
@@ -263,28 +262,25 @@ angular.module('starter.controllers', ['firebase'])
 
     		$scope.specialPropertyImage = resp.data;
 
-    		if(resp.data.length % 2 == 0) {
-    			for(var i = 0; i < resp.data.length; i+=2) {
-    				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
-    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-    				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-    				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
-    				rndval = 100 - rndval;
-    				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-    			}
-    		} else {
+    		var i = 0;
+    		if(resp.data.length % 2 != 0) {
     			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
 				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-				for(var i = 1; i < resp.data.length; i+=2) {
-					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
-					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-					$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-					url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
-					rndval = 100 - rndval;
-					$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-    			}
+				i = 1;
     		}
-    	
+    		
+    		rndvalKodem = 0;
+    		for(; i < resp.data.length; i+=2) {
+    			do {
+					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
+				} while (rndval == rndvalKodem);
+				rndvalKodem = rndval;				
+				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
+				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
+				rndval = 100 - rndval;
+				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+			}
     	}, function(err) {
     	    console.error('ERR', err);
     	})
@@ -295,6 +291,24 @@ angular.module('starter.controllers', ['firebase'])
 	    $timeout(function() {
 	    	var unbind = $rootScope.$broadcast( "showDetails", {PropertyId:propertyId} );
 	    });
+	}
+	
+	$scope.showAllBar = function() {
+		for(var i = 0; i < propertyCnt; i++) {
+			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertyROIChartAPI';
+	    	id = $scope.propertyImage[i]['PropertyId'];
+	    	console.log("id " + id);
+	    	$http({
+	    	    url: url, 
+	    	    method: "GET",
+	    	    params:  {index:id}, 
+	    	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	    	}).then(function(resp) {
+	    		console.log( resp.data);
+	    	}, function(err) {
+	    	    console.error('ERR', err);
+	    	})
+		}
 	}
 })
 
