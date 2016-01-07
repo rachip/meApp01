@@ -106,12 +106,12 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
   })
 
   // Each tab has its own nav history stack:
-  .state('invest.chooseProperty', {
-	  url: '/chooseProperty',
+  .state('invest.marketing', {
+	  url: '/marketing',
     views: {
       'menuContent': {
-		  templateUrl: 'views/invest/chooseProperty.html',
-          controller: 'ChoosePropertyCtrl'
+		  templateUrl: 'views/invest/marketing.html',
+          controller: 'MarketingCtrl'
     }
   }
   })

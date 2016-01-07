@@ -18,11 +18,10 @@ angular.module('starter.controllers', ['firebase'])
 
 	$scope.updateMe = function() { 
 		$scope.loginClick = 1;
-		//$location.path( "/app/manageProperty" );
     };
     
     $scope.investMe = function() {
-	    $state.go('invest.chooseProperty');
+	    $state.go('invest.marketing');
     };
 
     $scope.userDetail = {};
@@ -103,8 +102,13 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 //ChooseProperty Ctrl - show all marketing properties
-.controller('ChoosePropertyCtrl', function($scope, $http, $state, $rootScope, $timeout)  {
+.controller('MarketingCtrl', function($scope, $http, $state, $rootScope, $timeout, $compile)  {
     
+	var rndval;
+	var rndvalKodem = 0;
+	var i = 0;
+	var $x;
+	
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing', 
 	    method: "GET", 
@@ -114,6 +118,26 @@ angular.module('starter.controllers', ['firebase'])
 		$scope.properties = [];
 
 		$scope.properties = resp.data;
+		
+		if(resp.data.length % 2 != 0) {
+			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
+			$('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i].PropertyId + ")" + '" class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+			i = 1;
+		} 
+		
+		for(; i < resp.data.length; i+=2) {
+			do {
+				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
+			} while (rndval == rndvalKodem);
+			rndvalKodem = rndval;
+			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
+			$x = $('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i].PropertyId + ")" + '" class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+			$compile($x)($scope);
+			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
+			rndval = 100 - rndval;
+			$x = $('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i+1].PropertyId + ")" + '" class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
+			$compile($x)($scope);
+		} 
 	
 	}, function(err) {
 	    console.error('ERR', err);
@@ -121,7 +145,7 @@ angular.module('starter.controllers', ['firebase'])
 	
 	$scope.chooseMarketingProperty = function(propertyId) {
 		console.log("chooseMarketingProperty function " + propertyId);		
-		$state.go('tab.propertyDetails');
+		//$state.go('tab.propertyDetails');
 		$timeout(function() {
 	    	var unbind = $rootScope.$broadcast( "propertyId", {marketingPropertyId:propertyId} );
 	    });
