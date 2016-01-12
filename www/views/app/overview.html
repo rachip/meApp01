@@ -44,7 +44,11 @@
       <h2>INVESTMENTS</h2>
       <h4>List of your properties</h4>
     </div>  
-    <div id="INVESTMENTSimg"></div>
+    <div id="INVESTMENTSimg">
+    	<div ng-repeat="property in propertyImage" class="animated fadeInLeft col {{property.class}}" 
+    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}">
+    	</div>
+    </div>
     <!-- END Your properties section -->
     
     <!-- START Special deals section -->
@@ -52,8 +56,11 @@
       <h2>SPECIAL DEALS</h2>
       <h4>Similar properties that you invested</h4>
     </div>
-    <div id="SPECIAL_DEALSimg"></div>
-
+    <div id="SPECIAL_DEALSimg">
+    	<div ng-repeat="property in specialPropertyImage" class="animated fadeInLeft col {{property.class}}" 
+    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}">
+    	</div>
+    </div>
 
     <!-- END Special deals section -->
   </ion-content>

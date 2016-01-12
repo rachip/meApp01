@@ -101,48 +101,103 @@ angular.module('starter.controllers', ['firebase'])
     };
 })
 
-//ChooseProperty Ctrl - show all marketing properties
+//Marketing Ctrl - show all marketing properties per branch
 .controller('MarketingCtrl', function($scope, $http, $state, $rootScope, $timeout, $compile)  {
     
 	var rndval;
 	var rndvalKodem = 0;
 	var i = 0;
 	var $x;
+	$scope.selectedBranch = "";
+	$scope.showRochester = 1;
+	$scope.showCleveland = 1;
+	$scope.showColumbus = 1;
+	$scope.showJacksonviller = 1;
 	
+	// get properties to Rochester branch
 	$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getTop4Properties', 
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
 	    method: "GET",
 	    params:  {index:1}, 
 	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).then(function(resp) {
 
-		$scope.properties = [];
-
-		$scope.properties = resp.data;
-		console.log(resp.data.length);
-		/*if(resp.data.length % 2 != 0) {
-			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
-			$('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i].PropertyId + ")" + '" class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-			i = 1;
-		} 
+		$scope.rochesterProperties = [];
+		$scope.rochesterProperties = resp.data;
+		if(resp.data.length == 0) {
+			$scope.showRochester = 0;
+		}
 		
-		for(; i < resp.data.length; i+=2) {
-			do {
-				rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
-			} while (rndval == rndvalKodem);
-			rndvalKodem = rndval;
-			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-			$x = $('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i].PropertyId + ")" + '" class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-			$compile($x)($scope);
-			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
-			rndval = 100 - rndval;
-			$x = $('#MARKETINGimg').append('<div ng-click="chooseMarketingProperty(' + resp.data[i+1].PropertyId + ")" + '" class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-			$compile($x)($scope);
-		} */
+		addClass($scope.rochesterProperties);
+		
+	}, function(err) {
+	    console.error('ERR', err);
+	});
+	
+	// get properties to cleveland branch
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
+	    method: "GET",
+	    params:  {index:2}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.clevelandProperties = [];
+		$scope.clevelandProperties = resp.data;
+		if(resp.data.length == 0) {
+			$scope.showCleveland = 0;
+		}
+		
+		addClass($scope.clevelandProperties);
+		console.log($scope.clevelandProperties);
 	
 	}, function(err) {
 	    console.error('ERR', err);
 	});
+	
+	// get properties to columbus branch
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
+	    method: "GET",
+	    params:  {index:3}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.columbusProperties = [];
+		$scope.columbusProperties = resp.data;
+		if(resp.data.length == 0) {
+			$scope.showColumbus = 0;
+		}
+		
+		addClass($scope.columbusProperties);
+	
+	}, function(err) {
+	    console.error('ERR', err);
+	});
+	
+	// get properties to jacksonville branch
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
+	    method: "GET",
+	    params:  {index:4}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.jacksonvilleProperties = [];
+		$scope.jacksonvilleProperties = resp.data;
+		if(resp.data.length == 0) {
+			$scope.showJacksonviller = 0;
+		}
+		
+		addClass($scope.jacksonvilleProperties);
+		
+	}, function(err) {
+	    console.error('ERR', err);
+	});
+	
+	$scope.seeMore = function(branchId) {
+		$scope.selectedBranch = branchId;
+	};
 	
 	$scope.chooseMarketingProperty = function(propertyId) {
 		console.log("chooseMarketingProperty function " + propertyId);		
@@ -182,10 +237,8 @@ angular.module('starter.controllers', ['firebase'])
 
 //OverviewProperties Ctrl - logged in user
 .controller('OverviewPropertiesCtrl', function($scope, $http, $timeout, $rootScope) {
-	var url;
-    var id;
-    var rndval;
-    var rndvalKodem = 0;
+
+    var id;   
     var propertyCnt = 0;
     
     // get main bar values
@@ -246,28 +299,12 @@ angular.module('starter.controllers', ['firebase'])
     	}).then(function(resp) {
 
     		$scope.propertyImage = [];
-
     		$scope.propertyImage = resp.data;
+    		
     		propertyCnt = resp.data.length;
     		
-    		var i = 0;
-    		if(resp.data.length % 2 != 0) {
-    			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
-				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-				i = 1;
-    		} 
+    		addClass($scope.propertyImage);
     		
-			for(; i < resp.data.length; i+=2) {
-				do {
-					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
-				} while (rndval == rndvalKodem);
-				rndvalKodem = rndval;
-				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
-				rndval = 100 - rndval;
-				$('#INVESTMENTSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-			} 
     	}, function(err) {
     	    console.error('ERR', err);
     	})
@@ -285,28 +322,10 @@ angular.module('starter.controllers', ['firebase'])
     	}).then(function(resp) {
 
     		$scope.specialPropertyImage = [];
-
     		$scope.specialPropertyImage = resp.data;
 
-    		var i = 0;
-    		if(resp.data.length % 2 != 0) {
-    			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[0].FileName;
-				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-100" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-				i = 1;
-    		}
+    		addClass($scope.specialPropertyImage);
     		
-    		rndvalKodem = 0;
-    		for(; i < resp.data.length; i+=2) {
-    			do {
-					rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
-				} while (rndval == rndvalKodem);
-				rndvalKodem = rndval;				
-				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i].FileName;
-				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-				url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/' + resp.data[i+1].FileName;
-				rndval = 100 - rndval;
-				$('#SPECIAL_DEALSimg').append('<div class="animated fadeInLeft col col-' + rndval + '" style="background-image: url(' +  "'" + url + "'" +');"></div>');
-			}
     	}, function(err) {
     	    console.error('ERR', err);
     	})
@@ -528,4 +547,36 @@ function getEvictionDetails(propertyId, $scope, $http) {
 	}, function(err) {
 	    console.error('ERR', err);
 	})
+}
+
+function addClass(data) {
+	var i = 0;
+	var rndvalKodem;
+	var rndval;
+	
+	//----------------------
+	//add col- class
+	if(data.length % 2 != 0) {
+		data[0].class = "col-100";
+		i = 1;
+	}
+	
+	rndvalKodem = 0;
+	for(; i < data.length; i+=2) {
+		do {
+			rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
+		} while (rndval == rndvalKodem);
+		rndvalKodem = rndval;				
+		data[i].class = "col-" + rndval;
+		rndval = 100 - rndval;
+		data[i+1].class = "col-" + rndval;
+	}
+	
+	//----------------------
+	//add desaturate class
+	for(i = 0; i < data.length; i++) {
+		if(data[i]["IsSoled"] == 1) {
+			data[i].class += " desaturate";
+		}
+	}
 }
