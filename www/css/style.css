@@ -180,6 +180,7 @@ width: 49.1%;
 
 .col {
     border: white 2px solid;
+    cursor: pointer;
 }
 
 .col-40 {
@@ -200,7 +201,7 @@ width: 49.1%;
 
 .col-100 {
     width: 100%;
-    float: none;
+    float: left;
     height: 170px;
     background-size: cover;
     background-position: center;

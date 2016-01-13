@@ -124,10 +124,11 @@ angular.module('starter.controllers', ['firebase'])
 
 		$scope.rochesterProperties = [];
 		$scope.rochesterProperties = resp.data;
+		
 		if(resp.data.length == 0) {
 			$scope.showRochester = 0;
 		}
-		
+		console.log("size rochesterProperties " + $scope.rochesterProperties);
 		addClass($scope.rochesterProperties);
 		
 	}, function(err) {
@@ -147,9 +148,8 @@ angular.module('starter.controllers', ['firebase'])
 		if(resp.data.length == 0) {
 			$scope.showCleveland = 0;
 		}
-		
+console.log("size clevelandProperties " + $scope.clevelandProperties);
 		addClass($scope.clevelandProperties);
-		console.log($scope.clevelandProperties);
 	
 	}, function(err) {
 	    console.error('ERR', err);
@@ -168,7 +168,7 @@ angular.module('starter.controllers', ['firebase'])
 		if(resp.data.length == 0) {
 			$scope.showColumbus = 0;
 		}
-		
+		console.log("size columbusProperties " + $scope.columbusProperties);
 		addClass($scope.columbusProperties);
 	
 	}, function(err) {
@@ -188,16 +188,20 @@ angular.module('starter.controllers', ['firebase'])
 		if(resp.data.length == 0) {
 			$scope.showJacksonviller = 0;
 		}
-		
+		console.log("size jacksonvilleProperties " + $scope.jacksonvilleProperties);
 		addClass($scope.jacksonvilleProperties);
 		
 	}, function(err) {
 	    console.error('ERR', err);
 	});
 	
-	$scope.seeMore = function(branchId) {
+	$scope.seeMore = function(branchId) {		
 		$scope.selectedBranch = branchId;
 	};
+	
+	$scope.back = function() {
+		$scope.selectedBranch = "";
+	}
 	
 	$scope.chooseMarketingProperty = function(propertyId) {
 		console.log("chooseMarketingProperty function " + propertyId);		
@@ -550,19 +554,19 @@ function getEvictionDetails(propertyId, $scope, $http) {
 }
 
 function addClass(data) {
-	var i = 0;
+	var length = data.length;
 	var rndvalKodem;
 	var rndval;
 	
 	//----------------------
 	//add col- class
 	if(data.length % 2 != 0) {
-		data[0].class = "col-100";
-		i = 1;
+		data[data.length - 1].class = "col-100";
+		length -= 1;
 	}
 	
 	rndvalKodem = 0;
-	for(; i < data.length; i+=2) {
+	for(var i = 0; i < length; i+=2) {
 		do {
 			rndval = widthArr[Math.floor(Math.random()*widthArr.length)];
 		} while (rndval == rndvalKodem);
