@@ -318,3 +318,11 @@ hr {
     width: 180px;
     -webkit-transform: rotate(-45deg);
 }
+
+.spinner svg {
+	height: 80px;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 55%;
+    display: block;
+}

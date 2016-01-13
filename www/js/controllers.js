@@ -102,7 +102,7 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 //Marketing Ctrl - show all marketing properties per branch
-.controller('MarketingCtrl', function($scope, $http, $state, $rootScope, $timeout, $compile)  {
+.controller('MarketingCtrl', function($scope, $http, $state, $rootScope, $timeout, $q)  {
     
 	var rndval;
 	var rndvalKodem = 0;
@@ -112,87 +112,14 @@ angular.module('starter.controllers', ['firebase'])
 	$scope.showRochester = 1;
 	$scope.showCleveland = 1;
 	$scope.showColumbus = 1;
-	$scope.showJacksonviller = 1;
-	
-	// get properties to Rochester branch
-	$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
-	    method: "GET",
-	    params:  {index:1}, 
-	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-	}).then(function(resp) {
+	$scope.showJacksonviller = 1;	
+	$scope.isRouteLoading = true;
 
-		$scope.rochesterProperties = [];
-		$scope.rochesterProperties = resp.data;
-		
-		if(resp.data.length == 0) {
-			$scope.showRochester = 0;
-		}
-		console.log("size rochesterProperties " + $scope.rochesterProperties);
-		addClass($scope.rochesterProperties);
-		
-	}, function(err) {
-	    console.error('ERR', err);
-	});
-	
-	// get properties to cleveland branch
-	$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
-	    method: "GET",
-	    params:  {index:2}, 
-	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-	}).then(function(resp) {
-
-		$scope.clevelandProperties = [];
-		$scope.clevelandProperties = resp.data;
-		if(resp.data.length == 0) {
-			$scope.showCleveland = 0;
-		}
-console.log("size clevelandProperties " + $scope.clevelandProperties);
-		addClass($scope.clevelandProperties);
-	
-	}, function(err) {
-	    console.error('ERR', err);
-	});
-	
-	// get properties to columbus branch
-	$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
-	    method: "GET",
-	    params:  {index:3}, 
-	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-	}).then(function(resp) {
-
-		$scope.columbusProperties = [];
-		$scope.columbusProperties = resp.data;
-		if(resp.data.length == 0) {
-			$scope.showColumbus = 0;
-		}
-		console.log("size columbusProperties " + $scope.columbusProperties);
-		addClass($scope.columbusProperties);
-	
-	}, function(err) {
-	    console.error('ERR', err);
-	});
-	
-	// get properties to jacksonville branch
-	$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
-	    method: "GET",
-	    params:  {index:4}, 
-	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-	}).then(function(resp) {
-
-		$scope.jacksonvilleProperties = [];
-		$scope.jacksonvilleProperties = resp.data;
-		if(resp.data.length == 0) {
-			$scope.showJacksonviller = 0;
-		}
-		console.log("size jacksonvilleProperties " + $scope.jacksonvilleProperties);
-		addClass($scope.jacksonvilleProperties);
-		
-	}, function(err) {
-	    console.error('ERR', err);
+	var promise = getProperties($scope, $http, $q);
+	promise.then(function() {
+		console.log('Success: ');
+	}, function() {
+		alert('Failed: ');
 	});
 	
 	$scope.seeMore = function(branchId) {		
@@ -583,4 +510,100 @@ function addClass(data) {
 			data[i].class += " desaturate";
 		}
 	}
+}
+
+function getRochesterProperties($scope, $http) {
+	// get properties to Rochester branch
+	return $http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
+	    method: "GET",
+	    params:  {index:1}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.rochesterProperties = [];
+		$scope.rochesterProperties = resp.data;
+		
+		if(resp.data.length == 0) {
+			$scope.showRochester = 0;
+		}
+		addClass($scope.rochesterProperties);
+		
+	}, function(err) {
+	    console.error('ERR', err);
+	});
+}
+
+function getClevelandProperties($scope, $http) {
+	// get properties to cleveland branch
+	return $http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
+	    method: "GET",
+	    params:  {index:2}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.clevelandProperties = [];
+		$scope.clevelandProperties = resp.data;
+		if(resp.data.length == 0) {
+			$scope.showCleveland = 0;
+		}
+		addClass($scope.clevelandProperties);
+	
+	}, function(err) {
+	    console.error('ERR', err);
+	});
+} 
+
+
+function getColumbusProperties($scope, $http) {
+	// get properties to columbus branch
+	return $http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
+	    method: "GET",
+	    params:  {index:3}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.columbusProperties = [];
+		$scope.columbusProperties = resp.data;
+		if(resp.data.length == 0) {
+			$scope.showColumbus = 0;
+		}
+		addClass($scope.columbusProperties);
+	
+	}, function(err) {
+	    console.error('ERR', err);
+	});
+}
+
+function getJacksonvilleProperties($scope, $http) {
+	// get properties to jacksonville branch
+	return $http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getPropertiesPerBranchId', 
+	    method: "GET",
+	    params:  {index:4}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+
+		$scope.jacksonvilleProperties = [];
+		$scope.jacksonvilleProperties = resp.data;
+		if(resp.data.length == 0) {
+			$scope.showJacksonviller = 0;
+		}
+		addClass($scope.jacksonvilleProperties);
+		
+	}, function(err) {
+	    console.error('ERR', err);
+	}); 
+}
+
+function getProperties($scope, $http, $q) {
+	 
+	return $q.all([getRochesterProperties($scope, $http), getClevelandProperties($scope, $http), 
+	                getColumbusProperties($scope, $http), getJacksonvilleProperties($scope, $http)]).
+	                then(function(results) {
+		console.log("results "+ results);
+		$scope.isRouteLoading = false;
+	});
 }
