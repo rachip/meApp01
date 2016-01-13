@@ -21,15 +21,7 @@
 				<li>
 					<span class="totalReturnsTitle">Total Returns:</span>
 					<span class="totalReturns">{{propertyBar.TotalReturn}}</span>	
-				</li>
-				<li ng-show="showAll != 0">
-					<span>Total Time</span>
-					<span class="totalTime"></span>	
-				</li>
-				<li ng-show="showAll != 0">
-					<span class="">Yield</span>
-					<span class="yield">{{propertyBar.CurrentYield}}</span>	
-				</li>
+				</li>				
 			</ul>					
 		</div>
     </div>
@@ -46,7 +38,8 @@
     </div>  
     <div id="INVESTMENTSimg">
     	<div ng-repeat="property in propertyImage" class="animated fadeInLeft col {{property.class}}" 
-    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}">
+    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}"
+    	ng-click="showPropertyDetails(property.PropertyId, property.FileName)">
     	</div>
     </div>
     <!-- END Your properties section -->

@@ -140,7 +140,7 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 //Chats Ctrl
-.controller('ChatsCtrl', function($scope, $firebaseObject,$firebaseArray, $rootScope ) {
+.controller('ChatsCtrl', function($scope, $firebaseObject, $firebaseArray, $rootScope) {
 
 	var userId = localStorage.getItem("id");
 
@@ -167,11 +167,9 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 //OverviewProperties Ctrl - logged in user
-.controller('OverviewPropertiesCtrl', function($scope, $http, $timeout, $rootScope) {
+.controller('OverviewPropertiesCtrl', function($scope, $http, $timeout, $rootScope, $state) {
 
-    var id;   
-    var propertyCnt = 0;
-    $scope.showAll = 0;
+    var id;  
     
     // get main bar values
     url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertiesROIChartAPI';
@@ -208,7 +206,7 @@ angular.module('starter.controllers', ['firebase'])
 		function start() {
 			$('.label').val("sghdsfhsdf");
 		    var rp1 = radialProgress(document.getElementById('div1'))
-		            //.label("ROI")
+		            .label("ROI")
 		            .onClick(onClick1)
 		            .diameter(120)
 		            .value(val)
@@ -232,8 +230,6 @@ angular.module('starter.controllers', ['firebase'])
 
     		$scope.propertyImage = [];
     		$scope.propertyImage = resp.data;
-    		
-    		propertyCnt = resp.data.length;
     		
     		addClass($scope.propertyImage);
     		
@@ -263,39 +259,25 @@ angular.module('starter.controllers', ['firebase'])
     	})
 	}
 	
-	$scope.showDetails = function(propertyId) {
+	$scope.showPropertyDetails = function(propertyId, imageURL) {
 		console.log("showDetails function " + propertyId);
+		$state.go('app.propertyDetails');
 	    $timeout(function() {
-	    	var unbind = $rootScope.$broadcast( "showDetails", {PropertyId:propertyId} );
+	    	var unbind = $rootScope.$broadcast( "showDetails", {PropertyId:propertyId, ImageURL:imageURL} );
 	    });
-	}
-	
-	$scope.showAllBar = function() {
-		for(var i = 0; i < propertyCnt; i++) {
-			url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertyROIChartAPI';
-	    	id = $scope.propertyImage[i]['PropertyId'];
-	    	console.log("id " + id);
-	    	$http({
-	    	    url: url, 
-	    	    method: "GET",
-	    	    params:  {index:id}, 
-	    	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-	    	}).then(function(resp) {
-	    		console.log( resp.data);
-	    	}, function(err) {
-	    	    console.error('ERR', err);
-	    	})
-		}
 	}
 })
 
 //propertyDetails ctrl
-.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope) {
+.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope,  $ionicSlideBoxDelegate) {
+	$scope.numOfClicks = 0;
 	console.log("PropertyDetailsCtrl");
 	
 	var propertyId;
-	$scope.$on( "showDetails", function(event, data) {	  
+	$scope.$on( "showDetails", function(event, data) {
 		propertyId = data.PropertyId;
+		$scope.image = "http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/" + data.ImageURL ;
+		console.log("data " + $scope.imageURL);
 		getPropertyImage(propertyId, $scope, $http)
 		getPurchaseDetails(propertyId, $scope, $http);
 		getClosingDetails(propertyId, $scope, $http);
@@ -303,7 +285,11 @@ angular.module('starter.controllers', ['firebase'])
 		getLeasingDetails(propertyId, $scope, $http);
 		getOccupiedDetails(propertyId, $scope, $http);
 		getEvictionDetails(propertyId, $scope, $http);		
-	});	
+	});
+	
+	$scope.showSlider = function() {
+		$scope.numOfClicks = 1;
+	};
 })
 
 .controller('DashCtrl', function($scope) {})
@@ -315,7 +301,7 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 function getPropertyImage(propertyId, $scope, $http) {
-	$http({
+	/*$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getSpesificPropertyImage', 
 	    method: "GET",
 	    params:  {PropertyId: propertyId, ClientId: localStorage.getItem('id')}, 
@@ -325,25 +311,26 @@ function getPropertyImage(propertyId, $scope, $http) {
 			
 			$scope.image = resp.data[0];
 			
-			console.log($scope.image);
+			//console.log($scope.image);
 		} 		
 	}, function(err) {
 	    console.error('ERR', err);
-	})
-	
+	})*/
+	console.log("getPropertyImage function");
 	$scope.getAllImages = function() {
 		console.log("getAllImages");
 		$http({
 		    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAllPropertyImages', 
 		    method: "GET",
-		    params:  {PropertyId: propertyId, ClientId: localStorage.getItem('id')}, 
+		    params:  {PropertyId: propertyId}, 
 		    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 		}).then(function(resp) {
+			console.log("resp.data " + resp.data);
 			if (resp.data.length != 0) {
 				
 				$scope.allImages = resp.data;
 				
-				console.log($scope.allImages);
+				console.log("$scope.allImages " + $scope.allImages);
 			} 		
 		}, function(err) {
 		    console.error('ERR', err);
@@ -352,6 +339,7 @@ function getPropertyImage(propertyId, $scope, $http) {
 }
 
 function getPurchaseDetails(propertyId, $scope, $http) {
+	console.log("getPurchaseDetails function");
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PurchaseAndSale', 
 	    method: "GET",

@@ -1,21 +1,45 @@
 <ion-view title="Update ME">
   <ion-content > 
 	
-	<div id="image">
-		<img class="category-image" ng-src="http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{image.FileName}}" 
-			 ng-click="getAllImages()" spinner-on-load>
-	 <div class="categories-list">
-      <div ng-repeat="propertyImage_item in allImages" class="col">
-        <a class="feed-category">
-          <pre-img ratio="_1_1" helper-class="square-image">
-            <img class="category-image" ng-src="http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{propertyImage_item.FileName}}" spinner-on-load>
-          </pre-img>
-          <div class="category-bg"></div>
-          <span class="category-title">{{propertyImage_item.PropertyName}}</span>
-        </a>
-      </div>
-    </div>
+	<div ng-if="numOfClicks != 1">
+	   	<div class="animated fadeInLeft propertyImg" 
+	    	ng-style="{'background-image':'url(' + image + ')'}">	   	
+	   	</div> 
+	   	<button ng-click="showSlider()"></button>	
 	</div>
+	
+	<div ng-if="numOfClicks == 1">
+		<ion-slide-box on-slide-changed="slideHasChanged($index)">
+		  <ion-slide>
+		    <div class="propertyImg" ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="propertyImg"ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="propertyImg"ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		   <ion-slide>
+		    <div class="propertyImg"ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="propertyImg"ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="propertyImg"ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		   <ion-slide>
+		    <div class="propertyImg"ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="propertyImg" ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="propertyImg" ng-style="{'background-image':'url(' + image + ')'}"></div>
+		  </ion-slide>
+		</ion-slide-box>
+	</div>
+	
 	
 	<!-- START Purchase -->
 	<div id="purchase">
