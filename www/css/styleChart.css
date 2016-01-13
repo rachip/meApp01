@@ -56,8 +56,12 @@
 }
 
 .radial-svg {
-    display: block;
     margin: 0 auto;
+    width: 93px;
+    height: 93px;
+    position: absolute;
+    top: 116px;
+    left: 47px;
 }
 
  #test .arc2 {

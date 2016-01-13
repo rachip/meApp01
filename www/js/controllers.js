@@ -171,6 +171,7 @@ angular.module('starter.controllers', ['firebase'])
 
     var id;   
     var propertyCnt = 0;
+    $scope.showAll = 0;
     
     // get main bar values
     url = 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertiesROIChartAPI';
@@ -184,7 +185,7 @@ angular.module('starter.controllers', ['firebase'])
 
 		$scope.propertyBar = [];
 
-		$scope.propertyBar = resp.data;
+		$scope.propertyBar = resp.data[0];
 		
 		var val = resp.data[0]['TotalReturn'] / resp.data[0]['InvestmentAmount'] * 100;
 		

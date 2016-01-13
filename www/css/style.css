@@ -149,34 +149,6 @@ width: 49.1%;
     overflow: hidden;
 }
 
-.overviewMain{
-
-    background-image: url('img/coverLogin.jpg');
-    background-size: cover;
-    height: 300px;
-    background-position-y: -38px;
-    padding-top: 20px;
-
-}
-
-.overviewMain h2 {
-
-    color: white;
-    text-align: center;
-    margin: 0px;
-}
-
-.overviewMain h4 {
-
-    color: white;
-    text-align: center;
-    margin: 0px;
-}
-
-#INVESTMENTSimg {
-    width: 100%;
-
-}
 
 .col {
     border: white 2px solid;
@@ -215,6 +187,32 @@ width: 49.1%;
     background-position: center;
 }
 
+/* ********************************************** */
+/* Overview page */
+.overviewMain {
+    background-image: url('img/coverLogin.jpg');
+    background-size: cover;
+    height: 255px;
+    background-position-y: -38px;
+}
+
+.overviewMain h2 {
+    color: white;
+    text-align: center;
+    margin: 0px;
+    padding-top: 20px;
+}
+
+.overviewMain h4 {
+    color: #E3DEDE;
+    text-align: center;
+    margin: 0px;
+}
+
+#INVESTMENTSimg {
+    width: 100%;
+}
+
 .overviewTitle {
     text-align: center;
     font-family: 'MuseoSans';
@@ -222,20 +220,50 @@ width: 49.1%;
 }
 
 .overviewTitle h2 {
-   margin:0;
-   padding-top: 15px;
+   margin: 0;
+}
+
+.special {
+   padding-top: 20px;
 }
 
 .overviewTitle h4 {
-    margin:0;
+    margin: 0;
     padding-bottom: 15px;
 }
 
 #barValue {
-	float: left:
+	float: left;
+    color: #E3DEDE;
+    font-family: 'MuseoSans';
+    margin-top: 60px;
 }
 
+.totlaInvestment, .totalReturns, .totalTime, .yield {
+	color: white;
+    font-family: 'MuseoSans';
+}
+
+.totlaInvestment:after , .totalReturns:after {
+   font-family: 'MuseoSans';
+   content: "$";
+   color: white;	
+}
+
+.totlaInvestment, .totalReturns {
+   font-family: 'MuseoSans';
+   font-weight: bold;
+   float: right;	
+}
+
+.totlaInvestmentTitle, .totalReturnsTitle {
+	margin-right: 17px;
+	font-size: medium;	
+}
+
+/* ********************************************** */
 /* Marketing page */
+
 hr {
 	margin: 0;
 }
