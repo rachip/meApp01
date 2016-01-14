@@ -364,3 +364,44 @@ hr {
     background-size: cover;
     background-position: center;
 }
+
+.propertyName {
+	font-family: 'MuseoSans';
+	font-size: x-large;
+    font-weight: bolder;
+    margin: 30px 50px;
+	text-shadow: 1px 1px #000000;	
+}
+
+hr.propertyDetails {
+	border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.section {
+	margin: 20px 40px;
+}
+.sectionTitle {
+	display: inline-block;
+}
+
+.arrow {
+	float: right;
+	margin-top: 7px;
+}
+
+ul.propertyDetails li {
+	font-family: 'MuseoSans';
+	line-height: 3;
+    font-size: medium;
+}
+
+ul.propertyDetails li span:first-child:after {
+	content: " :";
+}
+
+ul.propertyDetails li span:nth-child(2) {
+	float: right;
+    font-weight: bold;
+}

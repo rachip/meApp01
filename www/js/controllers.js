@@ -271,7 +271,13 @@ angular.module('starter.controllers', ['firebase'])
 //propertyDetails ctrl
 .controller('PropertyDetailsCtrl', function($scope, $http, $rootScope,  $ionicSlideBoxDelegate) {
 	$scope.numOfClicks = 0;
-	console.log("PropertyDetailsCtrl");
+	
+	$scope.showPurchase = 1;
+	$scope.showClosing = 0;
+	$scope.showRenovation = 0;
+	$scope.showLeasing = 0;
+	$scope.showOccupied = 0;
+	$scope.showEviction = 0;	
 	
 	var propertyId;
 	$scope.$on( "showDetails", function(event, data) {
@@ -289,6 +295,29 @@ angular.module('starter.controllers', ['firebase'])
 	
 	$scope.showSlider = function() {
 		$scope.numOfClicks = 1;
+	};
+	
+	$scope.click = function(section) {		
+		switch(section){
+			case 1:
+				$scope.showPurchase = ($scope.showPurchase) ? 0 : 1;
+				break;
+			case 2:
+				$scope.showClosing = ($scope.showClosing) ? 0 : 1;
+				break;
+			case 3:
+				$scope.showRenovation = ($scope.showRenovation) ? 0 : 1;
+				break;
+			case 4:
+				$scope.showLeasing = ($scope.showLeasing) ? 0 : 1;
+				break;
+			case 5:
+				$scope.showOccupied = ($scope.showOccupied) ? 0 : 1;
+				break;
+			case 6:
+				$scope.showEviction = ($scope.showEviction) ? 0 : 1;
+				break;
+		}		
 	};
 })
 
@@ -317,7 +346,7 @@ function getPropertyImage(propertyId, $scope, $http) {
 	    console.error('ERR', err);
 	})*/
 	console.log("getPropertyImage function");
-	$scope.getAllImages = function() {
+	
 		console.log("getAllImages");
 		$http({
 		    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAllPropertyImages', 
@@ -330,12 +359,11 @@ function getPropertyImage(propertyId, $scope, $http) {
 				
 				$scope.allImages = resp.data;
 				
-				console.log("$scope.allImages " + $scope.allImages);
+				console.log("$scope.allImages " + Object.keys(resp.data[0]));
 			} 		
 		}, function(err) {
 		    console.error('ERR', err);
 		})
-	}
 }
 
 function getPurchaseDetails(propertyId, $scope, $http) {
