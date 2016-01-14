@@ -405,3 +405,15 @@ ul.propertyDetails li span:nth-child(2) {
 	float: right;
     font-weight: bold;
 }
+
+.infoBtn {
+	width: 90%;
+    margin: 10px 5%;
+    border: 4px black solid;
+    background-color: white;
+    height: 60px;
+    font-size: large;
+    font-weight: bold;
+    position: absolute;
+    bottom: 20px;
+}
