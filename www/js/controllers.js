@@ -116,7 +116,6 @@ angular.module('starter.controllers', ['firebase'])
 
 	var promise = getProperties($scope, $http, $q);
 	promise.then(function() {
-		console.log('Success: ');
 	}, function() {
 		alert('Failed: ');
 	});
@@ -129,13 +128,21 @@ angular.module('starter.controllers', ['firebase'])
 		$scope.selectedBranch = "";
 	}
 	
-	$scope.chooseMarketingProperty = function(propertyId) {
-		console.log("chooseMarketingProperty function " + propertyId);		
-		//$state.go('tab.propertyDetails');
+	$scope.marketingDetails = function(propertyId) {	
+		$state.go('invest.marketingDetails');
 		$timeout(function() {
-	    	var unbind = $rootScope.$broadcast( "propertyId", {marketingPropertyId:propertyId} );
+	    	var unbind = $rootScope.$broadcast( "marketingDetails", {marketingPropertyId:propertyId} );
 	    });
 	};
+})
+
+//propertyDetails ctrl
+.controller('MarketingDetailsCtrl', function($scope, $http, $rootScope,  $ionicSlideBoxDelegate) {
+	$scope.$on( "marketingDetails", function(event, data) {
+		propertyId = data.marketingPropertyId;
+		getAllMarketingPropertyImages(propertyId, $scope, $http);
+	});
+	
 })
 
 //Chats Ctrl
@@ -268,7 +275,7 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 //propertyDetails ctrl
-.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope,  $ionicSlideBoxDelegate) {
+.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope ) {
 	
 	$scope.showPurchase = 1;
 	$scope.showClosing = 0;
@@ -318,6 +325,7 @@ angular.module('starter.controllers', ['firebase'])
 	
 	$scope.requestInfo = function() {
 		$scope.requestPopup = ($scope.requestPopup) ? 0 : 1;
+		$("#requestInfo").removeClass("animated fadeInUp");
 		console.log("pp "+ $scope.pp);
 	};
 	
@@ -345,7 +353,7 @@ function getPropertyImage(propertyId, $scope, $http) {
 	}).then(function(resp) {
 		if (resp.data.length != 0) {
 			
-			$scope.allImages = resp.data;
+			$scope.allImages = resp.data;			
 		} 		
 	}, function(err) {
 	    console.error('ERR', err);
@@ -658,7 +666,22 @@ function getProperties($scope, $http, $q) {
 	return $q.all([getRochesterProperties($scope, $http), getClevelandProperties($scope, $http), 
 	                getColumbusProperties($scope, $http), getJacksonvilleProperties($scope, $http)]).
 	                then(function(results) {
-		console.log("results "+ results);
 		$scope.isRouteLoading = false;
 	});
+}
+
+function getAllMarketingPropertyImages(propertyId, $scope, $http) {
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getAllMarketingPropertyImages', 
+	    method: "GET",
+	    params:  {index:propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			$scope.marketingPropertyImages = resp.data;
+			console.log("$scope.marketingPropertyImages" + $scope.marketingPropertyImages);
+		} 
+	}, function(err) {
+	    console.error('ERR', err);
+	})
 }

@@ -2,8 +2,8 @@
   <ion-content > 
 	
 	<div>
-		<ion-slide-box>
-	   	<ion-slide ng-repeat="propertyImg in allImages">
+		<ion-slide-box ng-if="allImages">
+	   	<ion-slide ng-repeat="propertyImg in allImages" >
 		    <div class="propertyImg" 
 		    ng-style="{'background-image':'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ propertyImg.FileName }})'}">		    
 		    </div>
@@ -333,7 +333,7 @@
 	
 	<button class="infoBtn" ng-click="requestInfo()">REQUEST INFO</button>
 	
-	<div ng-if="requestPopup == 1" 
+	<div id="requestInfo" ng-if="requestPopup == 1" 
 		ng-class="{1: 'animated fadeInUp requestPopup'}[requestPopup]"
 		ng-class="{0: 'animated fadeOutDown'}[requestPopup]">
 		<h2>REQUEST INFO</h2>

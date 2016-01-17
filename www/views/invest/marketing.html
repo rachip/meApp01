@@ -16,7 +16,7 @@
 	   	<div class="animated fadeInLeft subTitle">Rochester properties</div>
 	   	<div ng-repeat="property in rochesterProperties" class="animated fadeInLeft col {{property.class}}" 
 	    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}"
-	    	ng-if="$index <= 3 || selectedBranch == 1">
+	    	ng-if="$index <= 3 || selectedBranch == 1" ng-click="marketingDetails(property.PropertyId)">
 	    	<div class="price">{{property.Price}}</div>
 	    	<div class="address">{{property.Address}}</div>
 	    	<div ng-class="{trapezoid: property.IsSoled == 1}"></div>
@@ -33,7 +33,7 @@
 	   	<div class="animated fadeInLeft subTitle">Cleveland properties</div>
 	   	<div ng-repeat="property in clevelandProperties" class="animated fadeInLeft col {{property.class}}" 
 	    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}"
-	    	ng-if="$index <= 3 || selectedBranch == 2">
+	    	ng-if="$index <= 3 || selectedBranch == 2" ng-click="marketingDetails(property.PropertyId)">
 	    	<div class="price">{{property.Price}}</div>
 	    	<div class="address">{{property.Address}}</div>
 	    	<div ng-class="{trapezoid: property.IsSoled == 1}"></div>   		
@@ -49,7 +49,7 @@
 	   	<div class="animated fadeInLeft subTitle">Columbus properties</div>
 	   	<div ng-repeat="property in columbusProperties" class="animated fadeInLeft col {{property.class}}" 
 	    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}"
-	    	ng-if="$index <= 3 || selectedBranch == 3">
+	    	ng-if="$index <= 3 || selectedBranch == 3" ng-click="marketingDetails(property.PropertyId)">
 	    	<div class="price">{{property.Price}}</div>
 	    	<div class="address">{{property.Address}}</div>
 	    	<div ng-class="{trapezoid: property.IsSoled == 1}"></div>
@@ -66,7 +66,7 @@
 	   	<div class="animated fadeInLeft subTitle">Jacksonville properties</div>
 	   	<div ng-repeat="property in jacksonvilleProperties" class="animated fadeInLeft col {{property.class}}" 
 	    	ng-style="{'background-image': 'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ property.FileName }})'}"
-	    	ng-if="$index <= 3 || selectedBranch == 4">
+	    	ng-if="$index <= 3 || selectedBranch == 4" ng-click="marketingDetails(property.PropertyId)">
 	    	<div class="price">{{property.Price}}</div>
 	    	<div class="address">{{property.Address}}</div>
 	    	<div ng-class="{trapezoid: property.IsSoled == 1}"></div>

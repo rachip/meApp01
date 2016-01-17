@@ -115,33 +115,23 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     }
   }
   })
-
-
-    .state('tab.propertyDetails', {
-      url: '/propertyDetails/:id',
-      views: {
-        'tab-chooseProperty': {
-          templateUrl: 'templates/propertyDetails.html',
-          controller: 'PropertyDetailsCtrl'
-        }
-      }
-    })
+  
+   // Each tab has its own nav history stack:
+  .state('invest.marketingDetails', {
+	  url: '/marketingDetails',
+    views: {
+      'menuContent': {
+		  templateUrl: 'views/invest/marketingDetails.html',
+          controller: 'MarketingDetailsCtrl'
+    }
+  }
+  })
 
     .state('chats', {
     url: '/chats',
       templateUrl: 'templates/tab-chats.html',
           controller: 'ChatsCtrl'
  
-  })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
   });
 
   // if none of the above states are matched, use this as the fallback
