@@ -89,8 +89,7 @@ angular.module('starter.controllers', ['firebase'])
 					localStorage.setItem("email", $scope.userDetail.email);
 					localStorage.setItem("password", $scope.userDetail.password);
 				}
-
-				console.log(resp.data);					
+					
 				$state.go('overview');
 			}
 		
@@ -270,21 +269,22 @@ angular.module('starter.controllers', ['firebase'])
 
 //propertyDetails ctrl
 .controller('PropertyDetailsCtrl', function($scope, $http, $rootScope,  $ionicSlideBoxDelegate) {
-	$scope.numOfClicks = 0;
 	
 	$scope.showPurchase = 1;
 	$scope.showClosing = 0;
 	$scope.showRenovation = 0;
 	$scope.showLeasing = 0;
 	$scope.showOccupied = 0;
-	$scope.showEviction = 0;	
+	$scope.showEviction = 0;
+	
+	$scope.requestPopup = 0;
+	$scope.ppp;
 	
 	var propertyId;
 	$scope.$on( "showDetails", function(event, data) {
-		propertyId = data.PropertyId;
-		$scope.image = "http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/" + data.ImageURL ;
-		console.log("data " + $scope.imageURL);
-		getPropertyImage(propertyId, $scope, $http)
+		propertyId = data.PropertyId;		
+		getPropertyImage(propertyId, $scope, $http);
+		getPropertyChart(propertyId, $scope, $http);
 		getPurchaseDetails(propertyId, $scope, $http);
 		getClosingDetails(propertyId, $scope, $http);
 		getRenovationDetails(propertyId, $scope, $http);
@@ -292,10 +292,6 @@ angular.module('starter.controllers', ['firebase'])
 		getOccupiedDetails(propertyId, $scope, $http);
 		getEvictionDetails(propertyId, $scope, $http);		
 	});
-	
-	$scope.showSlider = function() {
-		$scope.numOfClicks = 1;
-	};
 	
 	$scope.click = function(section) {		
 		switch(section){
@@ -319,6 +315,16 @@ angular.module('starter.controllers', ['firebase'])
 				break;
 		}		
 	};
+	
+	$scope.requestInfo = function() {
+		$scope.requestPopup = ($scope.requestPopup) ? 0 : 1;
+		console.log("pp "+ $scope.pp);
+	};
+	
+	$scope.checked = function (tableName) {
+		$scope.tbls.push[tableName];
+		console.log($scope.tbls);
+	};
 })
 
 .controller('DashCtrl', function($scope) {})
@@ -329,41 +335,74 @@ angular.module('starter.controllers', ['firebase'])
   };
 })
 
-function getPropertyImage(propertyId, $scope, $http) {
-	/*$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getSpesificPropertyImage', 
+function getPropertyImage(propertyId, $scope, $http) {	
+	console.log("getPropertyImage function");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAllPropertyImages', 
 	    method: "GET",
-	    params:  {PropertyId: propertyId, ClientId: localStorage.getItem('id')}, 
+	    params:  {PropertyId: propertyId}, 
 	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).then(function(resp) {
 		if (resp.data.length != 0) {
 			
-			$scope.image = resp.data[0];
-			
-			//console.log($scope.image);
+			$scope.allImages = resp.data;
 		} 		
 	}, function(err) {
 	    console.error('ERR', err);
-	})*/
-	console.log("getPropertyImage function");
-	
-		console.log("getAllImages");
-		$http({
-		    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAllPropertyImages', 
-		    method: "GET",
-		    params:  {PropertyId: propertyId}, 
-		    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-		}).then(function(resp) {
-			console.log("resp.data " + resp.data);
-			if (resp.data.length != 0) {
-				
-				$scope.allImages = resp.data;
-				
-				console.log("$scope.allImages " + Object.keys(resp.data[0]));
-			} 		
-		}, function(err) {
-		    console.error('ERR', err);
-		})
+	})
+}
+
+function getPropertyChart(propertyId, $scope, $http) {
+	console.log("getPropertyChart function");
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertyROIChartAPI', 
+	    method: "GET",
+	    params:  {index: propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			
+			$scope.propertyChart = resp.data[0];
+			var today = new Date();
+			var date = new Date(resp.data[0]['InvestmentDate']);
+			
+			var months;
+		    months = (today.getFullYear() - date.getFullYear()) * 12;
+		    months -= date.getMonth() + 1;
+		    months += today.getMonth();
+		    $scope.month = months <= 0 ? 0 : months;
+ 
+			var val = resp.data[0]['TotalReturn'] / resp.data[0]['InvestmentAmount'] * 100;
+			
+			// bar
+			var div1 = d3.select(document.getElementById('div2'));
+			start();
+
+			function onClick1() {
+			    deselect();
+			}
+
+			function labelFunction(val,min,max) {
+
+			}
+
+			function deselect() {
+			    //div1.attr("class","radial");
+			}
+
+			function start() {
+				$('.label').val("sghdsfhsdf");
+			    var rp1 = radialProgress(document.getElementById('div2'))
+			            .label("ROI")
+			            .onClick(onClick1)
+			            .diameter(120)
+			            .value(val)
+			            .render();
+			}
+		} 		
+	}, function(err) {
+	    console.error('ERR', err);
+	})
 }
 
 function getPurchaseDetails(propertyId, $scope, $http) {
@@ -384,7 +423,6 @@ function getPurchaseDetails(propertyId, $scope, $http) {
 			$scope.IsBalanceFile = $scope.purchaseAndSale['IsBalanceFile'] == 1 ? true : false;
 			$scope.IsFilesTo = $scope.purchaseAndSale['IsFilesToS‌ignFile'] == 1 ? true : false;
 			$scope.showPurchaseNote = $scope.purchaseAndSale['ShowNote'] == 1 ? true : false;
-							
 		} 		
 	}, function(err) {
 	    console.error('ERR', err);

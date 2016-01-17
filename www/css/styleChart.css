@@ -95,3 +95,32 @@
     color: #000;
 
 }
+
+/*Property details chart*/
+#div2 .component {
+	fill: #EDE5E5;
+}
+
+#div2 .label {
+	fill: #030303;
+	font-weight: bold;
+    font-size: larger;
+}
+
+#div2 .radial-svg {
+	margin: 0 auto;
+    width: 93px;
+    height: 150px;
+    position: initial;
+    /* top: 116px; */
+    left: 47px;
+}
+
+.chart {
+	margin: 40px 40px;
+	height: 116px;
+}
+
+#div2 .arc {
+	fill: #030303;
+}

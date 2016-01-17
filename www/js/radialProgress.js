@@ -26,7 +26,6 @@
  
 
 function radialProgress(parent) {
-	console.log("parent" + parent);
     var _data=null,
         _duration= 1000,
         _selection,

@@ -2,9 +2,9 @@
   <ion-content > 
 	
 	<div>
-		<ion-slide-box on-slide-changed="slideHasChanged($index)">
+		<ion-slide-box>
 	   	<ion-slide ng-repeat="propertyImg in allImages">
-		    <div class="animated fadeInLeft propertyImg" 
+		    <div class="propertyImg" 
 		    ng-style="{'background-image':'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ propertyImg.FileName }})'}">		    
 		    </div>
 		  </ion-slide>	   	
@@ -13,14 +13,43 @@
 	
 	<div class="propertyName">{{allImages[0].PropertyName}}</div>
 	
+	<div class="chart">
+		<div id='outer' >
+		    <div id="main" style="width: 140px;">
+		        <div id="div2"></div>
+		    </div>
+		</div>
+		
+		<div id="barValueDiv2">
+			<ul>
+				<li>
+					<span class="totlaInvestmentTitleDiv2">Total Investment:</span>
+					<span class="totlaInvestmentDiv2">{{propertyChart.InvestmentAmount}}</span>					
+				</li>
+				<li>
+					<span class="totalReturnsTitleDiv2">Total Returns:</span>
+					<span class="totalReturnsDiv2">{{propertyChart.TotalReturn}}</span>	
+				</li>
+				<li>
+					<span class="totlaTimeTitle">Total Time:</span>
+					<span class="totlaTime">{{month}}</span>					
+				</li>
+				<br/>
+				<li>
+					<span class="currentYieldTitle">Yield:</span>
+					<span class="currentYield">{{propertyChart.CurrentYield}}</span>					
+				</li>				
+			</ul>					
+		</div>
+	</div>
+	
 	<hr class="propertyDetails">
 	
 	<!-- START Purchase -->
 	<div class="section">
-		<h3 class="sectionTitle">Purchase And Sale</h3>
-		<i class="icon pointer arrow" ng-click="click(1)"
+		<h3 class="sectionTitle" ng-click="click(1)">Purchase And Sale</h3>
+		<i class="icon pointer arrow" 
 		ng-class="showPurchase == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i> 
-		
 		<div ng-if="showPurchase == 1" ng-class="showPurchase == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
 			<ul class="propertyDetails">
 				<li>
@@ -64,8 +93,8 @@
 	
 	<!-- START Closing -->
  	<div class="section">
- 		<h3 class="sectionTitle">Closing</h3>
-		<i class="icon pointer arrow" ng-click="click(2)"
+ 		<h3 class="sectionTitle" ng-click="click(2)">Closing</h3>
+		<i class="icon pointer arrow" 
 		ng-class="showClosing == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>  
 
 		<div ng-if="showClosing == 1" ng-class="showClosing == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
@@ -95,8 +124,8 @@
 	
  	<!-- START Renovation --> 
  	<div class="section"> 
- 		<h3 class="sectionTitle">Renovation</h3>
-		<i class="icon pointer arrow" ng-click="click(3)"
+ 		<h3 class="sectionTitle" ng-click="click(3)">Renovation</h3>
+		<i class="icon pointer arrow" 
 		ng-class="showRenovation == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>  
 
 		<div ng-if="showRenovation == 1" ng-class="showRenovation == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
@@ -154,10 +183,9 @@
 	
  	<!-- START Leasing --> 
  	<div class="section"> 
- 		<h3 class="sectionTitle">Leasing</h3>
-		<i class="icon pointer arrow" ng-click="click(4)"
+ 		<h3 class="sectionTitle" ng-click="click(4)">Leasing</h3>
+		<i class="icon pointer arrow" 
 		ng-class="showLeasing == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>  
-
 		<div ng-if="showLeasing == 1" ng-class="showLeasing == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
 			<ul class="propertyDetails">
 				<li>
@@ -201,8 +229,8 @@
 	
  	<!-- START Occupied --> 
  	<div class="section">
- 		<h3 class="sectionTitle">Occupied</h3>
-		<i class="icon pointer arrow" ng-click="click(5)"
+ 		<h3 class="sectionTitle" ng-click="click(5)">Occupied Property</h3>
+		<i class="icon pointer arrow" 
 		ng-class="showOccupied == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>   
 
 		<div ng-if="showOccupied == 1" ng-class="showOccupied == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
@@ -256,10 +284,9 @@
 	
  	<!-- START Eviction --> 
  	<div class="section"> 
- 		<h3 class="sectionTitle">Eviction</h3>
-		<i class="icon pointer arrow" ng-click="click(6)"
+ 		<h3 class="sectionTitle" ng-click="click(6)">Eviction</h3>
+		<i class="icon pointer arrow" 
 		ng-class="showEviction == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>   
-		
 		<div ng-if="showEviction == 1" ng-class="showEviction == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
 			<ul class="propertyDetails">
 				<li>
@@ -304,7 +331,51 @@
 	<!-- END Eviction -->
 	
 	
-	<button class="infoBtn">REQUEST INFO</button>
+	<button class="infoBtn" ng-click="requestInfo()">REQUEST INFO</button>
+	
+	<div ng-if="requestPopup == 1" 
+		ng-class="{1: 'animated fadeInUp requestPopup'}[requestPopup]"
+		ng-class="{0: 'animated fadeOutDown'}[requestPopup]">
+		<h2>REQUEST INFO</h2>
+		<ul class="propertyDetails">
+			<li>
+				<span>Purchase and Sale</span>	
+				<span>
+					<input type="checkbox" id="purchase" ng-model="pp"/>
+				</span>
+			</li>
+			<li>
+				<span>Closing</span>
+				<span>
+					<input type="checkbox">
+				</span>
+			</li>
+			<li>
+				<span>Renovation</span>
+				<span>
+					<input type="checkbox">
+				</span>
+			</li>
+			<li>
+				<span>Leasing</span>
+				<span>
+					<input type="checkbox">
+				</span>
+			</li>
+			<li>
+				<span>Occupied Property</span>
+				<span>
+					<input type="checkbox">
+				</span>
+			</li>
+			<li>
+				<span>Eviction</span>
+				<span>
+					<input type="checkbox">
+				</span>
+			</li>
+		</ul>
+	</div>
 	
   </ion-content>
 </ion-view>
