@@ -122,6 +122,9 @@ angular.module('starter.controllers', ['firebase'])
 	
 	$scope.seeMore = function(branchId) {		
 		$scope.selectedBranch = branchId;
+		$timeout(function() {
+			$('.scroll').css('transform', 'translate3d(0px, 0px, 0px) scale(1)');
+		});		
 	};
 	
 	$scope.back = function() {
@@ -141,6 +144,7 @@ angular.module('starter.controllers', ['firebase'])
 	$scope.$on( "marketingDetails", function(event, data) {
 		propertyId = data.marketingPropertyId;
 		getAllMarketingPropertyImages(propertyId, $scope, $http);
+		getMarketingPropertyInfo(propertyId, $scope, $http);
 	});
 	
 })
@@ -285,7 +289,7 @@ angular.module('starter.controllers', ['firebase'])
 	$scope.showEviction = 0;
 	
 	$scope.requestPopup = 0;
-	$scope.ppp;
+	$scope.Info = {};
 	
 	var propertyId;
 	$scope.$on( "showDetails", function(event, data) {
@@ -324,14 +328,27 @@ angular.module('starter.controllers', ['firebase'])
 	};
 	
 	$scope.requestInfo = function() {
-		$scope.requestPopup = ($scope.requestPopup) ? 0 : 1;
-		$("#requestInfo").removeClass("animated fadeInUp");
-		console.log("pp "+ $scope.pp);
+		$scope.requestPopup = 1;
 	};
-	
-	$scope.checked = function (tableName) {
-		$scope.tbls.push[tableName];
-		console.log($scope.tbls);
+
+	$scope.sendRequestInfo = function() {		
+		console.log($scope.Info);
+		for(var i in $scope.Info) {
+			if($scope.Info[i]) {
+				$http({
+		    	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/RequestUpdate', 
+		    	    method: "GET",
+		    	    params:  { id:propertyId, table:i }, 
+		    	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+		    	}).then(function(resp) {
+		    		
+		    	}, function(err) {
+		    	    console.error('ERR', err);
+		    	})
+			}
+		}
+		$('#requestInfo').removeClass('fadeInUp').addClass('fadeOutDown');
+		$scope.requestPopup = 0;
 	};
 })
 
@@ -371,6 +388,10 @@ function getPropertyChart(propertyId, $scope, $http) {
 		if (resp.data.length != 0) {
 			
 			$scope.propertyChart = resp.data[0];
+			
+			var totalReturn = resp.data[0]['TotalReturn'];
+			var investmentAmount = resp.data[0]['InvestmentAmount'];
+			
 			var today = new Date();
 			var date = new Date(resp.data[0]['InvestmentDate']);
 			
@@ -380,7 +401,9 @@ function getPropertyChart(propertyId, $scope, $http) {
 		    months += today.getMonth();
 		    $scope.month = months <= 0 ? 0 : months;
  
-			var val = resp.data[0]['TotalReturn'] / resp.data[0]['InvestmentAmount'] * 100;
+		    
+		    $scope.currentYield = totalReturn / $scope.month * 12 / investmentAmount;
+			var val = totalReturn / investmentAmount * 100;
 			
 			// bar
 			var div1 = d3.select(document.getElementById('div2'));
@@ -679,7 +702,21 @@ function getAllMarketingPropertyImages(propertyId, $scope, $http) {
 	}).then(function(resp) {
 		if (resp.data.length != 0) {
 			$scope.marketingPropertyImages = resp.data;
-			console.log("$scope.marketingPropertyImages" + $scope.marketingPropertyImages);
+		} 
+	}, function(err) {
+	    console.error('ERR', err);
+	})
+}
+
+function getMarketingPropertyInfo(propertyId, $scope, $http) {
+	$http({
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getMarketingIdAPI', 
+	    method: "GET",
+	    params:  {index:propertyId}, 
+	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+	}).then(function(resp) {
+		if (resp.data.length != 0) {
+			$scope.marketingPropertyImages = resp.data;
 		} 
 	}, function(err) {
 	    console.error('ERR', err);

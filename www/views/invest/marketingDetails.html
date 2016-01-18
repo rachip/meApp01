@@ -1,0 +1,13 @@
+<ion-view title="Invest ME">
+  <ion-content > 
+	<div>
+		<ion-slide-box ng-if="marketingPropertyImages">
+	   	<ion-slide ng-repeat="propertyImg in marketingPropertyImages">
+		    <div class="propertyImg" 
+		    ng-style="{'background-image':'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ propertyImg.FileName }})'}">		    
+		    </div>
+		  </ion-slide>	   	
+	   	</ion-slide-box>
+	</div>	
+  </ion-content>
+</ion-view>

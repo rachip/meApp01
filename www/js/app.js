@@ -101,8 +101,8 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
   .state('invest', {
     url: '/invest',
     abstract: true,
-    templateUrl: 'views/invest/index.html',
-    controller: 'AuthCtrl'
+    templateUrl: 'views/app/template.html',
+    controller: 'AppCtrl'
   })
 
   // Each tab has its own nav history stack:

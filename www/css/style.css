@@ -461,23 +461,70 @@ ul.propertyDetails li span:nth-child(2) {
     margin-left: 5%;
 }
 
+.infoTitle {
+	text-align: center;
+}
+
+.infoSaveBtnDiv {
+	text-align: center;
+}
+
+.checkboxFive {
+	width: 25px;
+	position: relative;
+}
+
+.checkboxFive label {
+	cursor: pointer;
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	top: 9px;
+  	left: 0;
+	background: #eee;
+	border:1px solid #ddd;
+}
+
+.checkboxFive label:after {
+	opacity: 0.2;
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	background: transparent;
+	top: 8px;
+	left: 7px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.checkboxFive input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}
 /* input { */
 /*    -webkit-appearance: none; */
 /* } */
  
-input[type=checkbox] {
-/*    border: 1px solid #555; */
-/*    padding: 0.5em; */
-/*    font-size: 15px; */
-/*    line-height: 1.2em; */
-   width: 20px;
-   height: 15px;
-/*    background: #fff; */
-/*    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); */
-/*    -webkit-appearance: none; */
-/*    -webkit-box-shadow: 1px 1px 1px #fff; */
-/*    -webkit-border-radius: 0.2em; */
-}
+/* input[type=checkbox] { */
+/* /*    border: 1px solid #555; */ */
+/* /*    padding: 0.5em; */ */
+/* /*    font-size: 15px; */ */
+/* /*    line-height: 1.2em; */ */
+/*    width: 20px; */
+/*    height: 15px; */
+/* /*    background: #fff; */ */
+/* /*    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); */ */
+/* /*    -webkit-appearance: none; */ */
+/* /*    -webkit-box-shadow: 1px 1px 1px #fff; */ */
+/* /*    -webkit-border-radius: 0.2em; */ */
+/* } */
  
 /*  input[type=checkbox] { */
 /*    display: inline-block; */
@@ -490,4 +537,41 @@ input[type=checkbox] {
 /*    -webkit-border-radius: 0.25em; */
 /*    vertical-align: text-top; */
 /*  } */
+ .custom {
+ 	 background-color: #3f4041 !important;
+ }
  
+ /*Set the background to transparent for ion-item*/
+.custom .item {
+  background-color: transparent;
+  border:none;   /*Removes all borders*/
+  border-top: 1px solid;   /*Top Border for each menu item*/
+  border-bottom:2px solid;   /*Bottom border for each menu item*/
+  border-color: #666;   /*Sets colors for top and bottom border*/
+  color: white;    /*Text color for each item*/
+}
+ 
+/*Changes the border for the last item*/
+.custom .item:last-child {
+  border-bottom: 1px solid #666;
+}
+ 
+.custom .item-complex .item-content, .dark .item-radio .item-content {
+  background-color: transparent;
+}
+ 
+/*Just makes the type white*/
+.custom h2,
+.custom h3,
+.custom p,
+.custom a {
+  color: white;  /*Text color for each item, overrides the color property above*/
+}
+
+.menu {
+	background-color: #3d3d3d;
+}
+
+.aaa {
+	background-image: url('img/Logo-white.png');
+}

@@ -4,7 +4,7 @@
 	<div>
 		<ion-slide-box ng-if="allImages">
 	   	<ion-slide ng-repeat="propertyImg in allImages" >
-		    <div class="propertyImg" 
+		    <div class="animated fadeInLeft propertyImg" 
 		    ng-style="{'background-image':'url(http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/uploads/{{ propertyImg.FileName }})'}">		    
 		    </div>
 		  </ion-slide>	   	
@@ -37,7 +37,7 @@
 				<br/>
 				<li>
 					<span class="currentYieldTitle">Yield:</span>
-					<span class="currentYield">{{propertyChart.CurrentYield}}</span>					
+					<span class="currentYield">{{currentYield}}</span>					
 				</li>				
 			</ul>					
 		</div>
@@ -330,49 +330,58 @@
  	</div> 
 	<!-- END Eviction -->
 	
-	
 	<button class="infoBtn" ng-click="requestInfo()">REQUEST INFO</button>
-	
-	<div id="requestInfo" ng-if="requestPopup == 1" 
-		ng-class="{1: 'animated fadeInUp requestPopup'}[requestPopup]"
-		ng-class="{0: 'animated fadeOutDown'}[requestPopup]">
-		<h2>REQUEST INFO</h2>
+	<div id="requestInfo"
+		ng-if="requestPopup == 1" 
+		ng-class="requestPopup == 1 ? 'requestPopup animated fadeInUp' : 'requestPopup'">
+		<h3 class="infoTitle">REQUEST INFO</h3>
 		<ul class="propertyDetails">
 			<li>
 				<span>Purchase and Sale</span>	
-				<span>
-					<input type="checkbox" id="purchase" ng-model="pp"/>
+				<span class="checkboxFive">
+					<input type="checkbox" id="checkboxFiveInput" ng-model="Info.PurchasesAndSales"/>
+					<label for="checkboxFiveInput"></label>
 				</span>
 			</li>
 			<li>
 				<span>Closing</span>
-				<span>
-					<input type="checkbox">
+				<span class="checkboxFive">
+					<input type="checkbox" id="checkboxFiveInput1" ng-model="Info.Closing">
+					<label for="checkboxFiveInput1"></label>
 				</span>
 			</li>
 			<li>
 				<span>Renovation</span>
-				<span>
-					<input type="checkbox">
+				<span class="checkboxFive">
+					<input type="checkbox" id="checkboxFiveInput2" ng-model="Info.Renovations">
+					<label for="checkboxFiveInput2"></label>
 				</span>
 			</li>
 			<li>
 				<span>Leasing</span>
-				<span>
-					<input type="checkbox">
+				<span class="checkboxFive">
+					<input type="checkbox" id="checkboxFiveInput3" ng-model="Info.Leasing">
+					<label for="checkboxFiveInput3"></label>
 				</span>
 			</li>
 			<li>
 				<span>Occupied Property</span>
-				<span>
-					<input type="checkbox">
+				<span class="checkboxFive">
+					<input type="checkbox" id="checkboxFiveInput4" ng-model="Info.OccupiedProperty">
+					<label for="checkboxFiveInput4"></label>
 				</span>
 			</li>
 			<li>
 				<span>Eviction</span>
-				<span>
-					<input type="checkbox">
+				<span class="checkboxFive">
+					<input type="checkbox" id="checkboxFiveInput5" ng-model="Info.Evictions">
+					<label for="checkboxFiveInput5"></label>
 				</span>
+			</li>
+			<li>
+				<div class="infoSaveBtnDiv">
+					<button class="seeAll" ng-click="sendRequestInfo()">save</button>
+				</div>
 			</li>
 		</ul>
 	</div>
