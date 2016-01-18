@@ -279,7 +279,7 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 //propertyDetails ctrl
-.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope ) {
+.controller('PropertyDetailsCtrl', function($scope, $http, $rootScope, $timeout) {
 	
 	$scope.showPurchase = 1;
 	$scope.showClosing = 0;
@@ -348,7 +348,9 @@ angular.module('starter.controllers', ['firebase'])
 			}
 		}
 		$('#requestInfo').removeClass('fadeInUp').addClass('fadeOutDown');
-		$scope.requestPopup = 0;
+		$timeout(function() {
+			$scope.requestPopup = 0;
+		});	
 	};
 })
 

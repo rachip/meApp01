@@ -508,35 +508,7 @@ ul.propertyDetails li span:nth-child(2) {
 .checkboxFive input[type=checkbox]:checked + label:after {
 	opacity: 1;
 }
-/* input { */
-/*    -webkit-appearance: none; */
-/* } */
- 
-/* input[type=checkbox] { */
-/* /*    border: 1px solid #555; */ */
-/* /*    padding: 0.5em; */ */
-/* /*    font-size: 15px; */ */
-/* /*    line-height: 1.2em; */ */
-/*    width: 20px; */
-/*    height: 15px; */
-/* /*    background: #fff; */ */
-/* /*    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); */ */
-/* /*    -webkit-appearance: none; */ */
-/* /*    -webkit-box-shadow: 1px 1px 1px #fff; */ */
-/* /*    -webkit-border-radius: 0.2em; */ */
-/* } */
- 
-/*  input[type=checkbox] { */
-/*    display: inline-block; */
-/*    font-size: 15px; */
-/*    line-height: 1em; */
-/*    margin: 0 0.25em 0 0; */
-/*    padding: 0; */
-/*    width: 1.25em; */
-/*    height: 1.25em; */
-/*    -webkit-border-radius: 0.25em; */
-/*    vertical-align: text-top; */
-/*  } */
+
  .custom {
  	 background-color: #3f4041 !important;
  }
@@ -558,13 +530,11 @@ ul.propertyDetails li span:nth-child(2) {
  
 .custom .item-complex .item-content, .dark .item-radio .item-content {
   background-color: transparent;
+      font-size: 22px;
 }
  
 /*Just makes the type white*/
-.custom h2,
-.custom h3,
-.custom p,
-.custom a {
+.custom h2, .custom h3, .custom p, .custom a {
   color: white;  /*Text color for each item, overrides the color property above*/
 }
 
@@ -572,6 +542,24 @@ ul.propertyDetails li span:nth-child(2) {
 	background-color: #3d3d3d;
 }
 
+.menu .bar-header {
+	background-color: #3d3d3d;
+	height: 99px;
+	
+}
+.bar.bar-stable .title {
+	color: white;
+}
+
+.titleSide{
+	margin-top: 20px;
+}
 .aaa {
 	background-image: url('img/Logo-white.png');
+	background-position: center;
+    background-size: cover;
+    width: 30px;
+    height: 19px;
+    margin-left: 7px;
+    padding-top: 17px;
 }
