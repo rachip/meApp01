@@ -46,8 +46,8 @@
 	<hr class="propertyDetails">
 	
 	<!-- START Purchase -->
-	<div class="section">
-		<h3 class="sectionTitle" ng-click="click(1)">Purchase And Sale</h3>
+	<div class="section" ng-click="click(1)">
+		<h3 class="sectionTitle">Purchase And Sale</h3>
 		<i class="icon pointer arrow" 
 		ng-class="showPurchase == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i> 
 		<div ng-if="showPurchase == 1" ng-class="showPurchase == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
@@ -92,8 +92,8 @@
 	<hr class="propertyDetails">
 	
 	<!-- START Closing -->
- 	<div class="section">
- 		<h3 class="sectionTitle" ng-click="click(2)">Closing</h3>
+ 	<div class="section" ng-click="click(2)">
+ 		<h3 class="sectionTitle">Closing</h3>
 		<i class="icon pointer arrow" 
 		ng-class="showClosing == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>  
 
@@ -123,8 +123,8 @@
 	<hr class="propertyDetails">
 	
  	<!-- START Renovation --> 
- 	<div class="section"> 
- 		<h3 class="sectionTitle" ng-click="click(3)">Renovation</h3>
+ 	<div class="section" ng-click="click(3)"> 
+ 		<h3 class="sectionTitle">Renovation</h3>
 		<i class="icon pointer arrow" 
 		ng-class="showRenovation == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>  
 
@@ -182,8 +182,8 @@
 	<hr class="propertyDetails">
 	
  	<!-- START Leasing --> 
- 	<div class="section"> 
- 		<h3 class="sectionTitle" ng-click="click(4)">Leasing</h3>
+ 	<div class="section" ng-click="click(4)"> 
+ 		<h3 class="sectionTitle">Leasing</h3>
 		<i class="icon pointer arrow" 
 		ng-class="showLeasing == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>  
 		<div ng-if="showLeasing == 1" ng-class="showLeasing == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
@@ -228,8 +228,8 @@
 	<hr class="propertyDetails">
 	
  	<!-- START Occupied --> 
- 	<div class="section">
- 		<h3 class="sectionTitle" ng-click="click(5)">Occupied Property</h3>
+ 	<div class="section" ng-click="click(5)">
+ 		<h3 class="sectionTitle">Occupied Property</h3>
 		<i class="icon pointer arrow" 
 		ng-class="showOccupied == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>   
 
@@ -283,8 +283,8 @@
 	<hr class="propertyDetails">
 	
  	<!-- START Eviction --> 
- 	<div class="section"> 
- 		<h3 class="sectionTitle" ng-click="click(6)">Eviction</h3>
+ 	<div class="section" ng-click="click(6)"> 
+ 		<h3 class="sectionTitle">Eviction</h3>
 		<i class="icon pointer arrow" 
 		ng-class="showEviction == 1 ? 'animated fadeIn ion-chevron-up' : 'animated fadeIn ion-chevron-down'"></i>   
 		<div ng-if="showEviction == 1" ng-class="showEviction == 1 ? 'animated fadeIn' : 'animated fadeOutUp'">
@@ -332,49 +332,49 @@
 	
 	<button class="infoBtn" ng-click="requestInfo()">REQUEST INFO</button>
 	<div id="requestInfo"
-		ng-if="requestPopup == 1" 
+		ng-show="requestPopup == 1" 
 		ng-class="requestPopup == 1 ? 'requestPopup animated fadeInUp' : 'requestPopup'">
 		<h3 class="calign">REQUEST INFO</h3>
 		<ul class="propertyDetails">
 			<li>
 				<span>Purchase and Sale</span>	
 				<span class="checkboxFive">
-					<input type="checkbox" id="checkboxFiveInput" ng-model="Info.PurchasesAndSales"/>
+					<input type="checkbox" id="checkboxFiveInput" class="checkbox" ng-model="Info.PurchasesAndSales"/>
 					<label for="checkboxFiveInput"></label>
 				</span>
 			</li>
 			<li>
 				<span>Closing</span>
 				<span class="checkboxFive">
-					<input type="checkbox" id="checkboxFiveInput1" ng-model="Info.Closing">
+					<input type="checkbox" id="checkboxFiveInput1" name="checkbox" ng-model="Info.Closing">
 					<label for="checkboxFiveInput1"></label>
 				</span>
 			</li>
 			<li>
 				<span>Renovation</span>
 				<span class="checkboxFive">
-					<input type="checkbox" id="checkboxFiveInput2" ng-model="Info.Renovations">
+					<input type="checkbox" id="checkboxFiveInput2" class="checkbox" ng-model="Info.Renovations">
 					<label for="checkboxFiveInput2"></label>
 				</span>
 			</li>
 			<li>
 				<span>Leasing</span>
 				<span class="checkboxFive">
-					<input type="checkbox" id="checkboxFiveInput3" ng-model="Info.Leasing">
+					<input type="checkbox" id="checkboxFiveInput3" class="checkbox" ng-model="Info.Leasing">
 					<label for="checkboxFiveInput3"></label>
 				</span>
 			</li>
 			<li>
 				<span>Occupied Property</span>
 				<span class="checkboxFive">
-					<input type="checkbox" id="checkboxFiveInput4" ng-model="Info.OccupiedProperty">
+					<input type="checkbox" id="checkboxFiveInput4" class="checkbox" ng-model="Info.OccupiedProperty">
 					<label for="checkboxFiveInput4"></label>
 				</span>
 			</li>
 			<li>
 				<span>Eviction</span>
 				<span class="checkboxFive">
-					<input type="checkbox" id="checkboxFiveInput5" ng-model="Info.Evictions">
+					<input type="checkbox" id="checkboxFiveInput5" class="checkbox" ng-model="Info.Evictions">
 					<label for="checkboxFiveInput5"></label>
 				</span>
 			</li>

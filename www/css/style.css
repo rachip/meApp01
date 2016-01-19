@@ -468,6 +468,11 @@ ul.propertyDetails li span:nth-child(2) {
     margin-left: 5%;
 }
 
+#requestInfo {
+	position: absolute;
+    bottom: -30px;
+}
+
 .checkboxFive {
 	width: 25px;
 	position: relative;

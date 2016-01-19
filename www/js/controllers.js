@@ -329,6 +329,8 @@ angular.module('starter.controllers', ['firebase'])
 	
 	$scope.requestInfo = function() {
 		$scope.requestPopup = 1;
+		$('#requestInfo').removeClass('fadeOutDown').addClass('fadeInUp');		
+		$('input[type=checkbox]').removeAttr('checked');
 	};
 
 	$scope.sendRequestInfo = function() {		
@@ -347,8 +349,9 @@ angular.module('starter.controllers', ['firebase'])
 		    	})
 			}
 		}
-		$('#requestInfo').removeClass('fadeInUp').addClass('fadeOutDown');
-		$timeout(function() {
+		
+		$('#requestInfo').removeClass('fadeInUp').addClass('fadeOutDown');		
+		$timeout(function() {					
 			$scope.requestPopup = 0;
 		});	
 	};
@@ -363,7 +366,7 @@ angular.module('starter.controllers', ['firebase'])
 })
 
 function getPropertyImage(propertyId, $scope, $http) {	
-	console.log("getPropertyImage function");
+	console.log("getPropertyImage function" + propertyId);
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/PropertyImage/getAllPropertyImages', 
 	    method: "GET",
@@ -371,7 +374,7 @@ function getPropertyImage(propertyId, $scope, $http) {
 	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).then(function(resp) {
 		if (resp.data.length != 0) {
-			
+			console.log(resp.data);
 			$scope.allImages = resp.data;			
 		} 		
 	}, function(err) {
@@ -380,7 +383,7 @@ function getPropertyImage(propertyId, $scope, $http) {
 }
 
 function getPropertyChart(propertyId, $scope, $http) {
-	console.log("getPropertyChart function");
+	console.log("getPropertyChart function" + propertyId);
 	$http({
 	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Property/getPropertyROIChartAPI', 
 	    method: "GET",
@@ -391,11 +394,12 @@ function getPropertyChart(propertyId, $scope, $http) {
 			
 			$scope.propertyChart = resp.data[0];
 			
-			var totalReturn = resp.data[0]['TotalReturn'];
-			var investmentAmount = resp.data[0]['InvestmentAmount'];
+			var totalReturn = parseFloat(resp.data[0]['TotalReturn']);
+			var investmentAmount = parseFloat(resp.data[0]['InvestmentAmount']);
+			var dbDate = resp.data[0]['InvestmentDate'];
 			
 			var today = new Date();
-			var date = new Date(resp.data[0]['InvestmentDate']);
+			var date = (dbDate != "0000-00-00") ? new Date(dbDate) : new Date();
 			
 			var months;
 		    months = (today.getFullYear() - date.getFullYear()) * 12;
@@ -404,8 +408,8 @@ function getPropertyChart(propertyId, $scope, $http) {
 		    $scope.month = months <= 0 ? 0 : months;
  
 		    
-		    $scope.currentYield = totalReturn / $scope.month * 12 / investmentAmount;
-			var val = totalReturn / investmentAmount * 100;
+		    $scope.currentYield = ($scope.month) ? totalReturn / $scope.month * 12 / investmentAmount : 0;
+			var val = (investmentAmount != 0) ? totalReturn / investmentAmount * 100 : 0;
 			
 			// bar
 			var div1 = d3.select(document.getElementById('div2'));
