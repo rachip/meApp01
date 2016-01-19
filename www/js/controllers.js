@@ -112,7 +112,7 @@ angular.module('starter.controllers', ['firebase'])
 	$scope.showCleveland = 1;
 	$scope.showColumbus = 1;
 	$scope.showJacksonviller = 1;	
-	$scope.isRouteLoading = true;
+	$rootScope.isRouteLoading = true;
 
 	var promise = getProperties($scope, $http, $q);
 	promise.then(function() {
@@ -712,13 +712,14 @@ function getAllMarketingPropertyImages(propertyId, $scope, $http) {
 
 function getMarketingPropertyInfo(propertyId, $scope, $http) {
 	$http({
-	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getMarketingIdAPI', 
+	    url: 'http://ec2-52-32-92-71.us-west-2.compute.amazonaws.com/index.php/api/Marketing/getMarketingId', 
 	    method: "GET",
 	    params:  {index:propertyId}, 
 	    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).then(function(resp) {
 		if (resp.data.length != 0) {
-			$scope.marketingPropertyImages = resp.data;
+			$scope.marketingData = resp.data[0];
+			console.log($scope.marketingData);
 		} 
 	}, function(err) {
 	    console.error('ERR', err);

@@ -9,5 +9,54 @@
 		  </ion-slide>	   	
 	   	</ion-slide-box>
 	</div>	
+	
+	<div class="propertyName">{{marketingData.Price}}$</div>
+	<h4 class="left-50">{{marketingData.Neighborhood}}</h4>
+	<h4 class="left-50">{{marketingData.CityAndState}}</h4>
+	<h4 class="left-50">{{marketingData.Address}}</h4>
+	
+	<hr class="propertyDetails">
+	
+	<!-- START Investment Details -->
+	<div class="section"> 
+ 		<h3 class="sectionTitle">Investment Details</h3>
+ 		<div>
+ 			<div class="width_50pe left">
+ 				<ul>
+					<li class="line_2">
+						<span>Current Ann. Return</span>	
+						<span class="right">{{marketingData.CurrentAnnualReturn}}%</span>
+					</li>
+					<li class="line_2">
+						<span>Accrued Ann. Return</span>	
+						<span class="right">{{marketingData.AccruedAnnualReturn}}%</span>
+					</li>
+					<li class="line_2">
+						<span>Gross Ann. Return*</span>	
+						<span class="right">{{marketingData.GrossAnnualReturn}}%</span>
+					</li>
+				</ul>
+ 			</div>
+ 			<hr width="1" size="500">
+ 			<div class="width_50pe left">ds</div>
+ 		</div>
+		<!--	<i class="icon pointer arrow"></i>    -->		     
+ 	</div> 
+ 	<!-- END Investment Details -->
+	
+	<hr class="propertyDetails">
+	
+	<!-- START Investment Summary -->
+	<div class="section"> 
+ 		<h3 class="sectionTitle">Investment Summary</h3>
+<!-- 		<i class="icon pointer arrow"></i>    -->
+		<p>{{marketingData.InvestmentSummary}}</p>		     
+ 	</div> 
+ 	<!-- END Investment Summary -->
+ 	
+ 	
+ 	
+ 	
+ 	
   </ion-content>
 </ion-view>

@@ -1,3 +1,10 @@
+.left { float: left; }
+.right { float: right; }
+.left-50 { margin-left: 50px; }
+.calign { text-align: center; }
+.width_50pe { width:50%; }
+.line_2 { line-height: 2; }
+
 svg{width:30%;}
 
 @font-face {
@@ -461,14 +468,6 @@ ul.propertyDetails li span:nth-child(2) {
     margin-left: 5%;
 }
 
-.infoTitle {
-	text-align: center;
-}
-
-.infoSaveBtnDiv {
-	text-align: center;
-}
-
 .checkboxFive {
 	width: 25px;
 	position: relative;
@@ -545,8 +544,8 @@ ul.propertyDetails li span:nth-child(2) {
 .menu .bar-header {
 	background-color: #3d3d3d;
 	height: 99px;
-	
 }
+
 .bar.bar-stable .title {
 	color: white;
 }
@@ -554,6 +553,7 @@ ul.propertyDetails li span:nth-child(2) {
 .titleSide{
 	margin-top: 20px;
 }
+
 .aaa {
 	background-image: url('img/Logo-white.png');
 	background-position: center;
