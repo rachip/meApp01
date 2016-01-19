@@ -546,12 +546,9 @@ ul.propertyDetails li span:nth-child(2) {
 	height: 99px;
 }
 
-.bar.bar-stable .title {
-	color: white;
-}
-
-.titleSide{
+.title .titleSide{
 	margin-top: 20px;
+	color: white;
 }
 
 .aaa {
