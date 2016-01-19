@@ -12,23 +12,29 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" >
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title titleSide" style="margin: 10%; font-size: 23px; color: white">
+      	<img class="aaa"/> REAL ESTATE
+      </h1>
     </ion-header-bar>
-    <ion-content>
+    <ion-content class="custom">
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
+        <ion-item menu-close href="#/auth/main">
+          UPDATE
+          <img class="aaa"/>
+        </ion-item>        
+        <ion-item menu-close href="#/auth/main">
+          UPDATE
+          <img class="aaa"/>
         </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
+        <ion-item menu-close href="#/invest/marketing">
+          INVEST
+          <img class="aaa"/>
         </ion-item>
         <ion-item menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
+          CONTACT
+          <img class="aaa"/>
         </ion-item>
       </ion-list>
     </ion-content>

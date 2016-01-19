@@ -80,10 +80,14 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
   })
   
   //overview
-  .state('overview', {
+  .state('app.overview', {
     url: "/overview",
-    templateUrl: "views/app/overview.html",
-   controller: 'OverviewPropertiesCtrl'
+    views: {
+    	'menuContent': {
+		  templateUrl: "views/app/overview.html",
+		  controller: 'OverviewPropertiesCtrl'
+    	}
+    }
   })
   
   //property details
@@ -101,7 +105,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
   .state('invest', {
     url: '/invest',
     abstract: true,
-    templateUrl: 'views/app/template.html',
+    templateUrl: 'views/invest/index.html',
     controller: 'AppCtrl'
   })
 

@@ -90,7 +90,7 @@ angular.module('starter.controllers', ['firebase'])
 					localStorage.setItem("password", $scope.userDetail.password);
 				}
 					
-				$state.go('overview');
+				$state.go('app.overview');
 			}
 		
 		}, function(err) {
