@@ -96,6 +96,10 @@
 
 }
 
+#div2 {
+	height: 150px;	
+}    
+
 /*Property details chart*/
 #div2 .component {
 	fill: #EDE5E5;
